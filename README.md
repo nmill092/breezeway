@@ -1,43 +1,6 @@
-# Astro Starter Kit: Minimal
+The landing page for **Breezeway**, a fictional/concept *anticafé* based in Point Breeze, Philadelphia, PA. 
 
-```sh
-npm create astro@latest -- --template minimal
-```
+## What's an anticafé? 
+An anticafé operates on the idea that patrons pay for the *time* they spend in the space, rather than what they consume. In return, most anticafés provide unlimited (within reason) coffee, light snacks, and often other amenities like board games, access to video game consoles, meeting spaces, etc.  
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
-
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+Anticafés have never really taken off in the U.S. outside of a few small experiments in places like New York City, but they're rather common, most notably, across Eastern Europe and the former Soviet Union. During my time living in Russia, I was a regular at an anticafé called "Kopernik," where I spent countless hours idling after school/work. *Breezeway* is based on the anticafé model, with a focus on providing a communal space for the Point Breeze section of South Philadelphia - a "living room for the whole neighborhood." 

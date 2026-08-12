@@ -1,0 +1,33 @@
+---
+import { siteConfig } from "../lib/meta"; 
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+
+const { description, title, ogImg } = siteConfig; 
+
+---
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+	
+    <link rel="canonical" href={canonicalURL} />
+		 <meta name="viewport" content="width=device-width, initial-scale=1" />
+     <meta name="description" content={description} />
+     <meta name="robots" content="noindex, nofollow" />
+
+     <!-- OpenGraph props -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+     <meta property="og:url" content={canonicalURL} />
+    <meta property="og:image" content={new URL(ogImg, Astro.site)} />
+    <meta name="theme-color" content="#f0e9d8" />
+
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+    <slot name="head"/>
+	</head>
+	<body>
+		<slot/>
+	</body>
+</html>
