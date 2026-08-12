@@ -1,4 +1,5 @@
 ---
+import { Font } from "astro:assets";
 import { siteConfig } from "../lib/meta"; 
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
@@ -19,11 +20,16 @@ const { description, title, ogImg } = siteConfig;
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-     <meta property="og:url" content={canonicalURL} />
+    <meta property="og:url" content={canonicalURL} />
     <meta property="og:image" content={new URL(ogImg, Astro.site)} />
-    <meta name="theme-color" content="#f0e9d8" />
 
+    <meta name="theme-color" content="#f0e9d8" />
 		<meta name="generator" content={Astro.generator} />
+
+    <Font cssVariable="--font-equateur" preload/>
+    <Font cssVariable="--font-manrope" preload/>
+    <Font cssVariable="--font-jmh-typewriter"/>
+
 		<title>{title}</title>
     <slot name="head"/>
 	</head>
