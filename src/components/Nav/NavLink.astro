@@ -1,0 +1,13 @@
+---
+  const { href } = Astro.props; 
+---
+
+<a class="nav-link" href={href}>
+  <slot/>
+</a>
+
+<style>
+  .nav-link {
+    text-wrap: nowrap; 
+  }
+</style>

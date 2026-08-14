@@ -1,0 +1,25 @@
+---
+const { href } = Astro.props; 
+---
+
+<a id="nav-cta" href={href}>
+  <slot/>
+</a>
+
+<style>
+  #nav-cta {
+    color: var(--color-paper-text);
+    background-color: var(--color-accent); 
+    border-radius: var(--radius-pill);
+    padding-inline: var(--space-md);
+    padding-block: var(--space-3xs);
+    text-wrap: nowrap; 
+  }
+
+  @media screen and (width <= 850px) {
+    #nav-cta {
+      order: 4; 
+      padding-inline: var(--space-s);
+    }
+  }
+</style>

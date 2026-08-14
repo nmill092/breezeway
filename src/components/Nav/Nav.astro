@@ -1,0 +1,179 @@
+---
+import Logo from "./Logo.astro";
+import NavCta from "./NavCta.astro";
+import NavToggle from "./NavToggle.astro";
+---
+
+<header class="header">
+ 
+  <a class="brand" href="#main">
+    <Logo />
+  </a>
+  <nav class="primary-nav" id="primary-nav">
+    <ul class="nav-links">
+      <li class="nav-link">
+        <a href="#story">Our Story</a>
+      </li>
+      <li class="nav-link"><a href="#how">How it Works</a></li>
+      <li class="nav-link"><a href="#whatson">What's On</a></li>
+    </ul>
+    <div class="cta">
+      <NavCta>Hello</NavCta>
+    </div>
+  </nav>
+   <button
+    class="nav-toggle"
+    data-nav-toggle
+    aria-controls="primary-nav"
+    aria-expanded="false"
+  >
+    <span class="sr-only">Menu</span>
+    <NavToggle />
+  </button>
+</header>
+
+<style>
+  .header {
+    color: var(--color-ink);
+    padding-inline: var(--page-gutter);
+    position: sticky;
+    height: var(--header-h);
+    display: grid;
+    grid-template-columns: auto 1fr;
+    column-gap: 1rem;
+    background-color: var(--color-paper);
+    align-items: center; 
+  }
+
+  .nav-toggle {
+    border: none;
+    width: 25px;
+    height: 25px;
+    margin-inline-start: auto; 
+  }
+
+  .primary-nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    padding-inline: var(--page-gutter);
+    display: none;
+    background-color: var(--color-paper);
+    font-size: var(--fs-xl);
+    white-space: nowrap;
+
+    &[data-open] {
+      display: block;
+    }
+  }
+
+  .primary-nav .nav-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xs);
+    margin-block-end: var(--space-2xs);
+  }
+
+  .primary-nav[data-open] .nav-link {
+    border-bottom: 1px solid currentColor;
+  }
+
+  @media (width >= 53rem) {
+    .header {
+      grid-template-columns: auto 1fr auto;
+    }
+
+    .nav-toggle {
+      display: none;
+    }
+
+    .nav-links .nav-link {
+      font-size: inherit;
+      position: relative;
+    }
+
+    .primary-nav,
+    .primary-nav[data-open] {
+      position: static;
+      inset: auto;
+      padding-inline: 0;
+      display: contents;
+      font-size: inherit;
+    }
+
+    .primary-nav .nav-links {
+      list-style: none;
+      flex-direction: row;
+      gap: var(--space-md);
+      width: 100%;
+      justify-content: center;
+    }
+  }
+</style>
+
+<script>
+  import gsap from "gsap";
+
+  const navToggle = document.querySelector(
+    "[data-nav-toggle]",
+  ) as HTMLButtonElement;
+  
+  const navMenu = document.querySelector(".primary-nav");
+  const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const menuItems = navMenu?.querySelectorAll('.nav-link, .cta'); 
+
+  const handleNavToggleClick = () => {
+    if (!menuItems) return; 
+
+    const currOpen = navToggle?.getAttribute("aria-expanded") === "true";
+    const nextOpen = !currOpen;
+    navToggle.setAttribute("aria-expanded", String(nextOpen));
+
+    gsap.killTweensOf(menuItems);
+
+    if (nextOpen && !prefersReduced.matches) {
+      navMenu?.setAttribute("data-open", "true");
+      gsap.fromTo(
+        menuItems,
+        {
+          x: -100,
+          opacity: 0,
+        },
+        {
+          x: 0,
+          opacity: 1,
+          stagger: 0.05,
+          duration: 1.2,
+          ease: 'elastic.out(1,0.75)'
+        },
+      );
+    }
+
+    if (!nextOpen) {
+      gsap.to(menuItems, {
+        x: -100,
+        stagger: -0.05,
+        opacity: 0,
+        duration: .5,
+        ease: 'power2.in(1,0.25)',
+        onComplete: () => {
+          navMenu?.removeAttribute("data-open");
+          gsap.set(".nav-link, .cta", { clearProps: "transform,opacity" });
+        },
+      });
+    }
+  };
+
+  navToggle?.addEventListener("click", handleNavToggleClick);
+
+  const desktop = window.matchMedia("(min-width: 53rem)");
+
+  desktop.addEventListener("change", (event) => {
+    if (event.matches) {
+      navMenu?.removeAttribute("data-open");
+      navToggle.setAttribute("aria-expanded", "false");
+    }
+  });
+</script>
