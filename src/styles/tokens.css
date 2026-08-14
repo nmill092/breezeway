@@ -1,0 +1,57 @@
+/** PRIMITIVES **/ 
+
+:root {
+  --color-terracotta-300: oklch(0.393 0.076 41.468); 
+  --color-terracotta-500: oklch(0.526 0.101 41.468); 
+  --color-terracotta-700: oklch(0.66 0.127 41.468); 
+  --color-olive-300: oklch(0.361 0.024 133.982);
+  --color-olive-500: oklch(0.494 0.033 133.982); 
+  --color-olive-700: oklch(0.628 0.042 133.982); 
+  --color-cream-300: oklch(0.803 0.071 84.593);
+  --color-cream-500: oklch(0.937 0.029 84.593); 
+  --color-cream-700: oklch(0.941 0.027 84.593); 
+
+  /* --font-manrope, --font-equateur, --font-jmh-typewriter are declared in astro.config.mjs */ 
+}
+
+:root {
+  /** FONT SIZES **/ 
+  /* @link https://utopia.fyi/type/calculator?c=360,16,1.2,1440,20,1.25,5,2,&s=0.75|0.5|0.25,1.5|2|3|4|6,s-l&g=s,l,xl,12 */
+
+  --fs-xs: clamp(0.6944rem, 0.6593rem + 0.1564vw, 0.8rem);
+  --fs-s: clamp(0.8333rem, 0.7778rem + 0.2469vw, 1rem);
+  --fs-md: clamp(1rem, 0.9167rem + 0.3704vw, 1.25rem);
+  --fs-lg: clamp(1.2rem, 1.0792rem + 0.537vw, 1.5625rem);
+  --fs-xl: clamp(1.44rem, 1.269rem + 0.7602vw, 1.9531rem);
+  --fs-2xl: clamp(1.728rem, 1.4902rem + 1.0569vw, 2.4414rem);
+  --fs-3xl: clamp(2.0736rem, 1.7475rem + 1.4491vw, 3.0518rem);
+  --fs-4xl: clamp(2.4883rem, 2.0462rem + 1.965vw, 3.8147rem);
+
+  /** SPACING **/ 
+  --space-3xs: clamp(0.25rem, 0.2292rem + 0.0926vw, 0.3125rem);
+  --space-2xs: clamp(0.5rem, 0.4583rem + 0.1852vw, 0.625rem);
+  --space-xs: clamp(0.75rem, 0.6875rem + 0.2778vw, 0.9375rem);
+  --space-s: clamp(1rem, 0.9167rem + 0.3704vw, 1.25rem);
+  --space-md: clamp(1.5rem, 1.375rem + 0.5556vw, 1.875rem);
+  --space-l: clamp(2rem, 1.8333rem + 0.7407vw, 2.5rem);
+  --space-xl: clamp(3rem, 2.75rem + 1.1111vw, 3.75rem);
+  --space-2xl: clamp(4rem, 3.6667rem + 1.4815vw, 5rem);
+  --space-3xl: clamp(6rem, 5.5rem + 2.2222vw, 7.5rem);
+}
+
+/** SEMANTIC **/ 
+
+:root {
+  --color-ink: var(--color-olive-500);
+  --color-accent: var(--color-terracotta-500); 
+  --color-paper: var(--color-cream-500); 
+  --color-paper-text: var(--color-cream-700); 
+  --font-body: var(--font-manrope);
+  --header-h: 4rem; 
+  --nav-gap: var(--space-md); 
+  --page-gutter: var(--space-l);
+  --radius-pill: 999px; 
+  --pill-padding-x: var(--space-md); 
+  --pill-padding-y: var(--space-3xs); 
+}
+

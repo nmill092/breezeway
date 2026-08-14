@@ -1,0 +1,12 @@
+html {
+  background-color: var(--color-paper);
+  color-scheme: light;
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: calc(var(--header-h) + + var(--nav-gap)); 
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--fs-md);
+  padding-top: var(--nav-gap); 
+}
