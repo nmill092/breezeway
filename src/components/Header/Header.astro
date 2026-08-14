@@ -1,0 +1,244 @@
+---
+import Logo from "./Logo.astro";
+import NavToggle from "./NavToggle.astro";
+---
+
+<header class="header">
+  <a class="brand" href="#main">
+    <Logo />
+  </a>
+  <button
+    class="nav-toggle"
+    data-nav-toggle
+    aria-controls="primary-nav"
+    aria-expanded="false"
+    type="button"
+  >
+    <span class="sr-only">Menu</span>
+    <NavToggle />
+  </button>
+  <nav class="primary-nav" id="primary-nav">
+    <ul class="nav-links">
+      <li class="nav-link">
+        <a href="#story">Our Story</a>
+      </li>
+      <li class="nav-link"><a href="#how">How it Works</a></li>
+      <li class="nav-link"><a href="#whatson">What's On</a></li>
+    </ul>
+    <a class="nav-cta" href="#visit">Visit Breezeway</a>
+  </nav>
+</header>
+
+<style>
+  .header {
+    color: var(--color-ink);
+    padding-inline: var(--page-gutter);
+    position: sticky;
+    height: var(--header-h);
+    display: grid;
+    grid-template-columns: auto 1fr;
+    column-gap: 1rem;
+    background-color: var(--color-paper);
+    align-items: center;
+  }
+
+  .nav-toggle {
+    border: none;
+    width: 25px;
+    height: 25px;
+    margin-inline-start: auto;
+    transform: translateY(-.5rem);
+  }
+
+  .primary-nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    padding-inline: var(--page-gutter);
+    padding-block-start: var(--space-md);
+    display: none;
+    background-color: var(--color-paper);
+    font-size: var(--fs-xl);
+    white-space: nowrap;
+
+    &[data-open] {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-s);
+    }
+  }
+
+  .primary-nav .nav-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xs);
+    margin-block-end: var(--space-2xs);
+  }
+
+  .primary-nav[data-open] .nav-link:not(:last-child) {
+    border-block-end: 1px solid oklch(from currentColor calc(l + .2) c h);
+
+    a {
+      display: block; 
+    }
+  }
+
+  .nav-cta {
+    color: var(--color-paper-text);
+    background-color: var(--color-accent);
+    border-radius: var(--radius-pill);
+    padding-inline: var(--space-md);
+    padding-block: var(--space-3xs);
+    text-wrap: nowrap;
+
+    .primary-nav[data-open] & {
+      display: block;
+      align-self: start; 
+    }
+  }
+
+  @media (width >= 53rem) {
+    .header {
+      grid-template-columns: auto 1fr auto;
+    }
+
+    .nav-toggle {
+      display: none;
+    }
+
+    .nav-links .nav-link {
+      font-size: inherit;
+      position: relative;
+    }
+
+    .primary-nav,
+    .primary-nav[data-open] {
+      position: static;
+      inset: auto;
+      padding-inline: 0;
+      display: contents;
+      font-size: inherit;
+    }
+
+    .primary-nav .nav-links {
+      list-style: none;
+      flex-direction: row;
+      gap: var(--space-md);
+      width: 100%;
+      justify-content: center;
+    }
+  }
+</style>
+
+<script>
+  import gsap from "gsap";
+
+  const setupNav = () => {
+    const header = document.querySelector('.header');
+    if (!header) return;
+
+    const navToggle = header.querySelector("[data-nav-toggle]") as HTMLButtonElement;
+    const navMenu = header.querySelector(".primary-nav"); 
+    if (!navToggle || !navMenu) return;
+
+    const menuItems = navMenu.querySelectorAll(".nav-link, .nav-cta");
+    const getMenuOpen = () => navToggle.getAttribute("aria-expanded") === "true";
+
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    const openMenu = () => {
+      navToggle.setAttribute("aria-expanded", "true");
+      navMenu.setAttribute("data-open", "true");
+
+      if (prefersReduced) return;
+      gsap.killTweensOf(menuItems);
+      gsap.fromTo(
+        menuItems,
+        {
+          x: -100,
+          opacity: 0,
+        },
+        {
+          x: 0,
+          opacity: 1,
+          stagger: 0.05,
+          duration: 1.2,
+          ease: "elastic.out(1,0.75)",
+        },
+      );
+    };
+
+    const closeMenu = () => {
+      navToggle.setAttribute("aria-expanded", "false");
+
+      if (prefersReduced) {
+        navMenu.removeAttribute("data-open");
+        return;
+      }
+
+      gsap.killTweensOf(menuItems);
+      gsap.to(menuItems, {
+        x: -100,
+        stagger: -0.05,
+        opacity: 0,
+        duration: 0.5,
+        ease: "power2.in(1,0.25)",
+        onComplete: () => {
+          navMenu.removeAttribute("data-open");
+          gsap.set(menuItems, { clearProps: "transform,opacity" });
+        },
+      });
+    };
+
+    const resetMenu = () => {
+      gsap.killTweensOf(menuItems);
+      gsap.set(menuItems, { clearProps: "transform,opacity" });
+      navToggle.setAttribute("aria-expanded", "false");
+      navMenu.removeAttribute("data-open");
+    }
+
+    const handleNavToggleClick = () => {
+      const currOpen = navToggle.getAttribute("aria-expanded") === "true";
+      const nextOpen = !currOpen;
+
+      if (nextOpen) {
+        openMenu();
+      } else {
+        closeMenu();
+      }
+    };
+
+    navToggle.addEventListener("click", handleNavToggleClick);
+
+    window.addEventListener("keydown", (e: KeyboardEvent) => {
+      const isMenuOpen = getMenuOpen(); 
+      if (e.key === "Escape" && isMenuOpen) {
+        resetMenu(); 
+        navToggle.focus();
+      }
+    });
+
+    const desktop = window.matchMedia("(min-width: 53rem)");
+    desktop.addEventListener("change", (event) => {
+      if (event.matches) {
+        resetMenu(); 
+      }
+    });
+
+    const handleClickOutside = (e: PointerEvent) => {
+      const target = e.target as Node; 
+      const isMenuOpen = getMenuOpen(); 
+
+      if (isMenuOpen && (!navMenu.contains(target) && !navToggle.contains(target))) {
+        closeMenu()
+      }
+    }
+
+    document.addEventListener('pointerdown', handleClickOutside); 
+
+  };
+
+  setupNav();
+</script>

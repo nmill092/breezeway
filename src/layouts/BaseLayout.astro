@@ -4,7 +4,7 @@ import 'styles/global.css';
 import { Font } from "astro:assets";
 import { siteConfig } from "../lib/meta"; 
 
-import Nav from 'components/Nav/Nav.astro';
+import Header from 'components/Header/Header.astro';
 import Footer from 'components/Footer.astro';
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
@@ -41,7 +41,7 @@ const { description, title, ogImg } = siteConfig;
 	<body>
     <a href="#main" class="skip-link">Skip to content</a>
 
-    <Nav/>
+    <Header/>
     <main id="main">
       <slot/>
     </main>
