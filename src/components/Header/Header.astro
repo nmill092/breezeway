@@ -4,41 +4,49 @@ import NavToggle from "./NavToggle.astro";
 ---
 
 <header class="header">
-  <a class="brand" href="#main">
-    <Logo />
-  </a>
-  <button
-    class="nav-toggle"
-    data-nav-toggle
-    aria-controls="primary-nav"
-    aria-expanded="false"
-    type="button"
-  >
-    <span class="sr-only">Menu</span>
-    <NavToggle />
-  </button>
-  <nav class="primary-nav" id="primary-nav">
-    <ul class="nav-links">
-      <li class="nav-link">
-        <a href="#story">Our Story</a>
-      </li>
-      <li class="nav-link"><a href="#how">How it Works</a></li>
-      <li class="nav-link"><a href="#whatson">What's On</a></li>
-    </ul>
-    <a class="nav-cta" href="#visit">Visit Breezeway</a>
-  </nav>
+  <div class="container--wide">
+    <div class="header-inner">
+      <a class="brand" href="#main">
+        <Logo />
+      </a>
+      <button
+        class="nav-toggle"
+        data-nav-toggle
+        aria-controls="primary-nav"
+        aria-expanded="false"
+        type="button"
+      >
+        <span class="sr-only">Menu</span>
+        <NavToggle />
+      </button>
+      <nav class="primary-nav" id="primary-nav">
+        <ul class="nav-links">
+          <li class="nav-link">
+            <a href="#story">Our Story</a>
+          </li>
+          <li class="nav-link"><a href="#how">How it Works</a></li>
+          <li class="nav-link"><a href="#whatson">What's On</a></li>
+        </ul>
+        <a class="nav-cta" href="#visit">Visit Breezeway</a>
+      </nav>
+    </div>
+  </div>
 </header>
 
 <style>
   .header {
     color: var(--color-ink);
-    padding-inline: var(--page-gutter);
     position: sticky;
-    height: var(--header-h);
+    height: calc(var(--header-h) + var(--nav-gap));
+    padding-top: var(--nav-gap);
+
+    background-color: var(--color-paper);
+  }
+
+  .header-inner {
     display: grid;
     grid-template-columns: auto 1fr;
     column-gap: 1rem;
-    background-color: var(--color-paper);
     align-items: center;
   }
 
@@ -47,7 +55,7 @@ import NavToggle from "./NavToggle.astro";
     width: 25px;
     height: 25px;
     margin-inline-start: auto;
-    transform: translateY(-.5rem);
+    transform: translateY(-0.5rem);
   }
 
   .primary-nav {
@@ -57,15 +65,25 @@ import NavToggle from "./NavToggle.astro";
     right: 0;
     padding-inline: var(--page-gutter);
     padding-block-start: var(--space-md);
+    padding-block-end: var(--space-xs);
     display: none;
     background-color: var(--color-paper);
-    font-size: var(--fs-xl);
+    font-size: var(--fs-l);
     white-space: nowrap;
+    border-bottom: 1px solid currentColor;
 
     &[data-open] {
       display: flex;
       flex-direction: column;
       gap: var(--space-s);
+      opacity: 1;
+      transition:
+        0.3s display allow-discrete,
+        0.3s opacity allow-discrete;
+
+      @starting-style {
+        opacity: 0;
+      }
     }
   }
 
@@ -78,10 +96,10 @@ import NavToggle from "./NavToggle.astro";
   }
 
   .primary-nav[data-open] .nav-link:not(:last-child) {
-    border-block-end: 1px solid oklch(from currentColor calc(l + .2) c h);
+    border-block-end: 1px solid oklch(from currentColor calc(l + 0.2) c h);
 
     a {
-      display: block; 
+      display: block;
     }
   }
 
@@ -95,12 +113,12 @@ import NavToggle from "./NavToggle.astro";
 
     .primary-nav[data-open] & {
       display: block;
-      align-self: start; 
+      align-self: start;
     }
   }
 
   @media (width >= 53rem) {
-    .header {
+    .header-inner {
       grid-template-columns: auto 1fr auto;
     }
 
@@ -136,17 +154,22 @@ import NavToggle from "./NavToggle.astro";
   import gsap from "gsap";
 
   const setupNav = () => {
-    const header = document.querySelector('.header');
+    const header = document.querySelector(".header");
     if (!header) return;
 
-    const navToggle = header.querySelector("[data-nav-toggle]") as HTMLButtonElement;
-    const navMenu = header.querySelector(".primary-nav"); 
+    const navToggle = header.querySelector(
+      "[data-nav-toggle]",
+    ) as HTMLButtonElement;
+    const navMenu = header.querySelector(".primary-nav");
     if (!navToggle || !navMenu) return;
 
     const menuItems = navMenu.querySelectorAll(".nav-link, .nav-cta");
-    const getMenuOpen = () => navToggle.getAttribute("aria-expanded") === "true";
+    const getMenuOpen = () =>
+      navToggle.getAttribute("aria-expanded") === "true";
 
-    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const prefersReduced = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
 
     const openMenu = () => {
       navToggle.setAttribute("aria-expanded", "true");
@@ -178,18 +201,27 @@ import NavToggle from "./NavToggle.astro";
         return;
       }
 
+      const tl = gsap.timeline();
+
       gsap.killTweensOf(menuItems);
-      gsap.to(menuItems, {
+
+      tl.to(menuItems, {
         x: -100,
         stagger: -0.05,
         opacity: 0,
         duration: 0.5,
         ease: "power2.in(1,0.25)",
-        onComplete: () => {
-          navMenu.removeAttribute("data-open");
-          gsap.set(menuItems, { clearProps: "transform,opacity" });
+      }).to(
+        navMenu,
+        {
+          opacity: 0,
+          onComplete: () => {
+            navMenu.removeAttribute("data-open");
+            gsap.set(navMenu, { clearProps: "opacity" });
+          },
         },
-      });
+        "<",
+      );
     };
 
     const resetMenu = () => {
@@ -197,7 +229,7 @@ import NavToggle from "./NavToggle.astro";
       gsap.set(menuItems, { clearProps: "transform,opacity" });
       navToggle.setAttribute("aria-expanded", "false");
       navMenu.removeAttribute("data-open");
-    }
+    };
 
     const handleNavToggleClick = () => {
       const currOpen = navToggle.getAttribute("aria-expanded") === "true";
@@ -213,9 +245,9 @@ import NavToggle from "./NavToggle.astro";
     navToggle.addEventListener("click", handleNavToggleClick);
 
     window.addEventListener("keydown", (e: KeyboardEvent) => {
-      const isMenuOpen = getMenuOpen(); 
+      const isMenuOpen = getMenuOpen();
       if (e.key === "Escape" && isMenuOpen) {
-        resetMenu(); 
+        resetMenu();
         navToggle.focus();
       }
     });
@@ -223,21 +255,24 @@ import NavToggle from "./NavToggle.astro";
     const desktop = window.matchMedia("(min-width: 53rem)");
     desktop.addEventListener("change", (event) => {
       if (event.matches) {
-        resetMenu(); 
+        resetMenu();
       }
     });
 
     const handleClickOutside = (e: PointerEvent) => {
-      const target = e.target as Node; 
-      const isMenuOpen = getMenuOpen(); 
+      const target = e.target as Node;
+      const isMenuOpen = getMenuOpen();
 
-      if (isMenuOpen && (!navMenu.contains(target) && !navToggle.contains(target))) {
-        closeMenu()
+      if (
+        isMenuOpen &&
+        !navMenu.contains(target) &&
+        !navToggle.contains(target)
+      ) {
+        closeMenu();
       }
-    }
+    };
 
-    document.addEventListener('pointerdown', handleClickOutside); 
-
+    document.addEventListener("pointerdown", handleClickOutside);
   };
 
   setupNav();

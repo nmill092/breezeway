@@ -48,7 +48,7 @@
   --color-paper-text: var(--color-cream-700); 
   --font-body: var(--font-manrope);
   --header-h: 4rem; 
-  --nav-gap: var(--space-md); 
+  --nav-gap: 1rem; 
   --page-gutter: var(--space-l);
   --radius-pill: 999px; 
   --pill-padding-x: var(--space-md); 
