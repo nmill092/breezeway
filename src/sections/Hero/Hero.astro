@@ -9,12 +9,29 @@ import washi2 from "assets/images/embellishments/washi-2.png";
 import heroLaptop from "assets/images/hero-laptop.jpg";
 import HeroChess from "components/HeroChess.astro";
 import HeroHiFive from "components/HeroHiFive.astro";
+
+import { getImage } from "astro:assets";
+import tornMaskSrc from "assets/images/embellishments/tornpapermask.png";
+import tornTextureSrc from "assets/images/embellishments/tornpapertexture.jpg";
+
+const tornMask = await getImage({
+  src: tornMaskSrc,
+  format: "webp",
+  width: 400,
+});
+const tornTexture = await getImage({
+  src: tornTextureSrc,
+  format: "webp",
+  width: 400,
+  quality: 80,
+  priority: true,
+});
 ---
 
-<section class="hero">
+<section class="hero" data-hero>
   <div class="container--full-bleed">
     <div class="hero-grid">
-      <div class="hero-photo tl">
+      <div data-hero-image class="hero-photo br">
         <Polaroid
           img={heroBoardGameImg}
           tapeImg={washi1}
@@ -27,7 +44,7 @@ import HeroHiFive from "components/HeroHiFive.astro";
         />
       </div>
 
-      <div class="hero-photo br">
+      <div data-hero-image class="hero-photo tl">
         <Polaroid
           img={heroLaptop}
           tapeImg={washi2}
@@ -40,39 +57,65 @@ import HeroHiFive from "components/HeroHiFive.astro";
           width={500}
         />
       </div>
-
       <HeroStack />
-
-      <div class="hero-illustration tr">
+      <div data-hero-image class="hero-illustration tr">
         <HeroChess />
       </div>
-      <div class="hero-illustration bl">
+      <div data-hero-image class="hero-illustration bl">
         <HeroHiFive />
       </div>
     </div>
   </div>
+  <div class="torn-edge"></div>
 </section>
 
-<style>
+<style
+  define:vars={{
+    tornMask: `url(${tornMask.src})`,
+    tornTexture: `url(${tornTexture.src})`,
+  }}
+>
   .hero {
+    --torn-edge-height: 72px;
     container-type: inline-size;
   }
 
   .hero-grid {
+    position: relative;
     display: flex;
+    z-index: 1;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: var(--space-xl);
     color: var(--color-ink);
-    min-height: calc(100svh - (var(--header-h) + var(--nav-gap)));
+    min-height: calc(
+      100svh - (var(--header-h) + var(--nav-gap) + var(--torn-edge-height))
+    );
+  }
+
+  .torn-edge {
+    position: relative;
+    height: var(--torn-edge-height);
+    z-index: 0;
+    mask-image: var(--tornMask);
+    mask-repeat: repeat-x;
+    mask-size: 100% 100%;
+
+    background: var(--tornTexture);
+    background:
+      var(--tornTexture),
+      oklch(from var(--color-accent) calc(l + 0.1) c h / 0.2);
+    background-size: 500px 50%;
+    background-blend-mode: multiply;
+    background-attachment: fixed;
   }
 
   .hero-photo,
   .hero-illustration {
     --nudgeX: 0;
     --nudgeY: 0;
-    --rotate: 0; 
+    --rotate: 0;
     min-width: 0;
     transform: translate(var(--nudgeX), var(--nudgeY)) rotate(var(--rotate));
   }
@@ -82,9 +125,9 @@ import HeroHiFive from "components/HeroHiFive.astro";
   }
 
   .tl {
-    --rotate: -2.2deg; 
+    --rotate: -2.2deg;
     order: 2;
-    width: clamp(14rem, 80cqi, 25rem);
+    width: clamp(14rem, 75cqi, 22rem);
   }
 
   .br,
@@ -93,7 +136,7 @@ import HeroHiFive from "components/HeroHiFive.astro";
     display: none;
   }
 
-  @container (width >= 60rem) {
+  @container (width >= 65rem) {
     .hero-grid {
       display: grid;
       grid-template:
@@ -103,12 +146,19 @@ import HeroHiFive from "components/HeroHiFive.astro";
         "illustration1  text photo2" / minmax(15rem, 1fr) minmax(
           0,
           clamp(27rem, 27.3333rem + 11.8519cqi, 38rem)
-        ) minmax(15rem, 1fr);
+        )
+        minmax(15rem, 1fr);
     }
 
     .hero-photo,
     .hero-illustration {
       place-self: center;
+      transition: 0.3s scale ease;
+
+      &:hover {
+        --rotate: 0;
+        scale: 1.02;
+      }
     }
 
     .hero-illustration {
@@ -117,14 +167,15 @@ import HeroHiFive from "components/HeroHiFive.astro";
 
     .tl {
       grid-area: photo1;
-      width: clamp(15rem, 18cqi, 22rem);
+      width: clamp(15rem, 16cqi, 20rem);
       order: initial;
     }
     .br {
       grid-area: photo2;
-      width: clamp(15rem, 20cqi, 25rem);
+      width: clamp(15rem, 22cqi, 25rem);
       display: block;
       --rotate: 2.2deg;
+      --nudgeY: calc(var(--torn-edge-height) * 0.6);
     }
     .bl {
       grid-area: illustration1;
@@ -137,9 +188,70 @@ import HeroHiFive from "components/HeroHiFive.astro";
       grid-area: illustration2;
       --nudgeX: -47px;
       --nudgeY: -20px;
-      --rotate: 2deg; 
+      --rotate: 2deg;
       display: block;
       order: initial;
     }
   }
 </style>
+
+<script>
+  import gsap from "gsap";
+
+  const hero = document.querySelector("[data-hero]");
+
+  if (hero) {
+    let mm = gsap.matchMedia(hero);
+
+    mm.add("(prefers-reduced-motion: no-preference)", () => {
+      const images = gsap.utils
+        .toArray("[data-hero-image]")
+        .filter((el) => getComputedStyle(el as HTMLElement).display !== "none");
+
+      const tl = gsap.timeline({
+        delay: 0.2,
+        defaults: {
+          duration: ".8",
+        },
+      });
+
+      tl.from("[data-hero-title] span", {
+        autoAlpha: 0,
+        y: 20,
+      })
+        .from(
+          "[data-hero-swoosh]",
+          {
+            clipPath: "inset(0 100% 0 0)",
+            ease: "power2.out",
+          },
+          "<.3",
+        )
+        .from(
+          "[data-hero-eyebrow]",
+          {
+            autoAlpha: 0,
+            y: 20,
+          },
+          ">.3",
+        )
+        .from(
+          "[data-hero-cta]",
+          {
+            autoAlpha: 0,
+            y: 20,
+          },
+          "<.3",
+        )
+        .from(
+          images,
+          {
+            autoAlpha: 0,
+            "--rotate": 0,
+            stagger: 0.2,
+          },
+          "<.2",
+        );
+    });
+  }
+</script>
