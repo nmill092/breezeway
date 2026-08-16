@@ -39,7 +39,7 @@ import NavToggle from "./NavToggle.astro";
     position: sticky;
     height: calc(var(--header-h) + var(--nav-gap));
     padding-top: var(--nav-gap);
-
+    z-index: 999;
     background-color: var(--color-paper);
   }
 
@@ -63,6 +63,7 @@ import NavToggle from "./NavToggle.astro";
     top: 100%;
     left: 0;
     right: 0;
+    z-index: 999;
     padding-inline: var(--page-gutter);
     padding-block-start: var(--space-md);
     padding-block-end: var(--space-xs);
@@ -70,7 +71,9 @@ import NavToggle from "./NavToggle.astro";
     background-color: var(--color-paper);
     font-size: var(--fs-l);
     white-space: nowrap;
-    border-bottom: 1px solid currentColor;
+    box-shadow: 
+      0 .8px 1px -.2px oklch(from var(--shadow-color) l c h / .4), 
+      0 4px 5px -4px oklch(from var(--shadow-color) l c h / .4);  
 
     &[data-open] {
       display: flex;
@@ -211,17 +214,11 @@ import NavToggle from "./NavToggle.astro";
         opacity: 0,
         duration: 0.5,
         ease: "power2.in(1,0.25)",
-      }).to(
-        navMenu,
-        {
-          opacity: 0,
-          onComplete: () => {
-            navMenu.removeAttribute("data-open");
-            gsap.set(navMenu, { clearProps: "opacity" });
-          },
+        onComplete: () => {
+          navMenu.removeAttribute("data-open");
+          gsap.set(navMenu, { clearProps: "opacity" });
         },
-        "<",
-      );
+      })
     };
 
     const resetMenu = () => {

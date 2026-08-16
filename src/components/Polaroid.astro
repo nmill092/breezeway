@@ -1,0 +1,99 @@
+---
+import { Image } from 'astro:assets';
+import { fade } from 'astro:transitions';
+
+interface Props {
+  img: ImageMetadata;
+  tapeImg?: ImageMetadata; 
+  imgAlt: string;
+  tapeRotation?: string; 
+  priority?: boolean; 
+  variant?: 'square' | 'portrait' | 'landscape'; 
+  paddingVariant?: 'md' | 'lg'; 
+  width: number; 
+  position?: string; 
+}
+
+const { 
+  img, 
+  tapeImg, 
+  imgAlt, 
+  tapeRotation = '0deg', 
+  variant = 'square', 
+  priority = false, 
+  paddingVariant="md",
+  position="center",
+  width 
+} = Astro.props; 
+
+---
+
+<div class="polaroid-frame shadow-low" style={
+  `--aspect: ${variant === 'square' ? '1 / 1' :  
+    variant === 'portrait' ? '3 / 4' : 
+    variant === 'landscape' ? '13 / 9' : ''};
+  --padding: ${paddingVariant === 'md' ? '.4rem' : '.8rem'}`}>
+  <div class="polaroid-media">
+    <Image 
+      class="polaroid-img"
+      fit="cover" 
+      priority={priority}
+      src={img} 
+      alt={imgAlt} 
+      width={width}
+      position={position}
+      format="avif" /> 
+  </div>
+   {tapeImg && (
+    <div 
+      aria-hidden="true" 
+      class="polaroid-tape" 
+      style={`rotate: ${tapeRotation}`}>
+        <Image 
+          class="tape-img"
+          fit="cover" 
+          priority={priority}
+          src={tapeImg} 
+          alt={''} 
+          width={200}
+          format="avif" /> 
+    </div>
+   )}
+
+</div>
+
+<style>
+  .polaroid-frame {
+    background-color: var(--color-polaroid); 
+    position: relative; 
+    width: 100%; 
+    padding: var(--padding);
+    aspect-ratio: var(--aspect);
+  }
+
+  .polaroid-media {
+    aspect-ratio: var(--aspect);
+
+    .polaroid-img {
+      object-fit: cover;
+      width: 100%; 
+      height: 100%; 
+    }
+  }
+
+  .polaroid-tape {
+    position: absolute; 
+    width: 40%; 
+    height: auto; 
+    top: -6%; 
+    left: 50%; 
+    transform: translateX(-50%);
+
+    .tape-img {
+      width: 100%; 
+      height: 100%; 
+    }
+  }
+</style>
+
+

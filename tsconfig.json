@@ -8,6 +8,7 @@
       "islands/*": ["./src/islands/*"],
       "layouts/*": ["./src/layouts/*"],
       "styles/*": ["./src/styles/*"],
+      "assets/*": ["./src/assets/*"],
     }
   }
 }

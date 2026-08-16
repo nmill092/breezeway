@@ -1,0 +1,8 @@
+.pill {
+  border-radius: var(--radius-pill); 
+  padding-inline: var(--cta-px, var(--space-md));
+  padding-block: var(--cta-py, var(--space-3xs));
+  background-color: var(--cta-bg, var(--color-ink)); 
+  color: var(--color-paper-text);
+  text-wrap: nowrap; 
+}

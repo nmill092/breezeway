@@ -1,0 +1,145 @@
+---
+import HeroStack from "./HeroStack.astro";
+import Polaroid from "components/Polaroid.astro";
+
+import heroBoardGameImg from "assets/images/hero-boardgames.jpg";
+import washi1 from "assets/images/embellishments/washi-1.png";
+import washi2 from "assets/images/embellishments/washi-2.png";
+
+import heroLaptop from "assets/images/hero-laptop.jpg";
+import HeroChess from "components/HeroChess.astro";
+import HeroHiFive from "components/HeroHiFive.astro";
+---
+
+<section class="hero">
+  <div class="container--full-bleed">
+    <div class="hero-grid">
+      <div class="hero-photo tl">
+        <Polaroid
+          img={heroBoardGameImg}
+          tapeImg={washi1}
+          tapeRotation="2deg"
+          variant="landscape"
+          paddingVariant="md"
+          imgAlt="Several young people sat around a table playing a board game"
+          priority={true}
+          width={700}
+        />
+      </div>
+
+      <div class="hero-photo br">
+        <Polaroid
+          img={heroLaptop}
+          tapeImg={washi2}
+          tapeRotation="-2deg"
+          variant="square"
+          paddingVariant="md"
+          position="attention"
+          imgAlt="A person using a laptop while sitting on a beanbag"
+          priority={false}
+          width={500}
+        />
+      </div>
+
+      <HeroStack />
+
+      <div class="hero-illustration tr">
+        <HeroChess />
+      </div>
+      <div class="hero-illustration bl">
+        <HeroHiFive />
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    container-type: inline-size;
+  }
+
+  .hero-grid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-xl);
+    color: var(--color-ink);
+    min-height: calc(100svh - (var(--header-h) + var(--nav-gap)));
+  }
+
+  .hero-photo,
+  .hero-illustration {
+    --nudgeX: 0;
+    --nudgeY: 0;
+    --rotate: 0; 
+    min-width: 0;
+    transform: translate(var(--nudgeX), var(--nudgeY)) rotate(var(--rotate));
+  }
+
+  .hero-text {
+    order: 1;
+  }
+
+  .tl {
+    --rotate: -2.2deg; 
+    order: 2;
+    width: clamp(14rem, 80cqi, 25rem);
+  }
+
+  .br,
+  .bl,
+  .tr {
+    display: none;
+  }
+
+  @container (width >= 60rem) {
+    .hero-grid {
+      display: grid;
+      grid-template:
+        "photo1 text illustration2"
+        "photo1  text  illustration2"
+        "illustration1  text photo2"
+        "illustration1  text photo2" / minmax(15rem, 1fr) minmax(
+          0,
+          clamp(27rem, 27.3333rem + 11.8519cqi, 38rem)
+        ) minmax(15rem, 1fr);
+    }
+
+    .hero-photo,
+    .hero-illustration {
+      place-self: center;
+    }
+
+    .hero-illustration {
+      width: clamp(11rem, 16cqi, 19rem);
+    }
+
+    .tl {
+      grid-area: photo1;
+      width: clamp(15rem, 18cqi, 22rem);
+      order: initial;
+    }
+    .br {
+      grid-area: photo2;
+      width: clamp(15rem, 20cqi, 25rem);
+      display: block;
+      --rotate: 2.2deg;
+    }
+    .bl {
+      grid-area: illustration1;
+      --nudgeX: 80px;
+      --nudgeY: 20px;
+      --rotate: -2.8deg;
+      display: block;
+    }
+    .tr {
+      grid-area: illustration2;
+      --nudgeX: -47px;
+      --nudgeY: -20px;
+      --rotate: 2deg; 
+      display: block;
+      order: initial;
+    }
+  }
+</style>

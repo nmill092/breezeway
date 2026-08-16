@@ -1,0 +1,67 @@
+---
+import Swoosh from "components/Swoosh.astro";
+---
+
+<div class="hero-title-stack">
+  <h1 class="title">
+    <span>A living room</span>
+    <span>for the whole</span>
+    <span>neighborhood.</span>
+    <div class="swoosh" aria-hidden="true">
+      <Swoosh />
+    </div>
+  </h1>
+  <div class="eyebrow">
+    <span>Your new spot to work, play, relax, or caffeinate –</span>
+    <span>all right at home in South Philly.</span>
+  </div>
+  <a href="#how" class="hero-cta pill"> How Breezeway Works </a>
+</div>
+
+<style>
+  .hero-title-stack {
+    grid-area: text; 
+    place-self: center; 
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+  }
+
+  .title {
+    text-align: center;
+    line-height: .9; 
+    font-size: var(--fs-hero);
+    font-kerning: normal;
+    letter-spacing: -0.015em;
+    word-spacing: -0.025em;
+    position: relative; 
+    span {
+      display: block; 
+    }
+  }
+
+  .eyebrow {
+    text-align: center; 
+    line-height: 1.12; 
+    white-space: nowrap;
+    color: var(--color-ink);
+    margin-block-start: var(--space-md);
+
+    span {
+      display: block; 
+    }
+  }
+
+  .hero-cta {
+    margin-block-start: var(--space-l);
+  }
+
+  .swoosh {
+    width: 50%;
+    top: 110%;
+    left: 50%;
+    margin-inline: auto; 
+    margin-block-start: var(--space-3xs);
+    color: var(--color-accent);
+  }
+</style>

@@ -11,6 +11,8 @@
   --color-cream-500: oklch(0.937 0.029 84.593); 
   --color-cream-700: oklch(0.941 0.027 84.593); 
 
+  --color-offwhite: oklch(96.2% 0 0);
+
   /* --font-manrope, --font-equateur, --font-jmh-typewriter are declared in astro.config.mjs */ 
 }
 
@@ -26,6 +28,7 @@
   --fs-2xl: clamp(1.728rem, 1.4902rem + 1.0569vw, 2.4414rem);
   --fs-3xl: clamp(2.0736rem, 1.7475rem + 1.4491vw, 3.0518rem);
   --fs-4xl: clamp(2.4883rem, 2.0462rem + 1.965vw, 3.8147rem);
+  --fs-hero: clamp(2.986rem, 2.3919rem + 2.6406vw, 4.7684rem);
 
   /** SPACING **/ 
   --space-3xs: clamp(0.25rem, 0.2292rem + 0.0926vw, 0.3125rem);
@@ -45,13 +48,28 @@
   --color-ink: var(--color-olive-500);
   --color-accent: var(--color-terracotta-500); 
   --color-paper: var(--color-cream-500); 
-  --color-paper-text: var(--color-cream-700); 
+  --color-paper-text: var(--color-cream-700);
+  --color-polaroid: var(--color-offwhite);
+
   --font-body: var(--font-manrope);
+  --font-heading: var(--font-equateur);
   --header-h: 4rem; 
   --nav-gap: 1rem; 
   --page-gutter: var(--space-l);
   --radius-pill: 999px; 
   --pill-padding-x: var(--space-md); 
   --pill-padding-y: var(--space-3xs); 
+
+  --shadow-color: oklch(66.73% 0.05 84.41); 
+  --shadow-elevation-low:
+    -0.3px 0.4px 0.7px oklch(from var(--shadow-color) l c h / .12),
+    -0.6px 0.7px 1.3px -0.4px oklch(from var(--shadow-color) l c h / .28),
+    -1.3px 1.5px 2.7px -0.8px oklch(from var(--shadow-color) l c h / .45);
+
+  --shadow-elevation-medium:
+    -0.3px 0.4px 0.7px oklch(from var(--shadow-color) l c h / 0.13),
+    -1.4px 1.6px 2.9px -0.3px oklch(from var(--shadow-color) l c h / 0.26),
+    -3px 3.5px 6.3px -0.6px oklch(from var(--shadow-color) l c h / 0.38),
+    -6.6px 7.6px 13.8px -0.8px oklch(from var(--shadow-color) l c h / 0.51);
 }
 

@@ -9,3 +9,8 @@ body {
   font-family: var(--font-body);
   font-size: var(--fs-md);
 }
+
+:where(h1, h2, h2) {
+  font-family: var(--font-heading);
+  color: var(--color-ink);
+}

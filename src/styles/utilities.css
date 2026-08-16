@@ -19,3 +19,16 @@
   width: min(100% - (var(--page-gutter) * 2), 90rem); 
   margin-inline: auto;
 }
+
+.container--full-bleed {
+  width: calc(100% - var(--page-gutter) * 2);
+  margin-inline: auto;
+}
+
+.shadow-low {
+  box-shadow: var(--shadow-elevation-low);
+}
+
+.shadow-md {
+  box-shadow: var(--shadow-elevation-medium);
+}
