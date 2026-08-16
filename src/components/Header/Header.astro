@@ -37,10 +37,11 @@ import NavToggle from "./NavToggle.astro";
   .header {
     color: var(--color-ink);
     position: sticky;
+    top: 0; 
     height: calc(var(--header-h) + var(--nav-gap));
     padding-top: var(--nav-gap);
     z-index: 999;
-    background-color: var(--color-paper);
+    background-color: oklch(from var(--color-paper) l c h / .98);
   }
 
   .header-inner {
