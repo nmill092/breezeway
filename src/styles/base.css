@@ -2,7 +2,7 @@ html {
   background-color: var(--color-paper);
   color-scheme: light;
   -webkit-text-size-adjust: 100%;
-  scroll-padding-top: calc(var(--header-h) + + var(--nav-gap)); 
+  scroll-padding-top: calc(var(--header-h) + var(--nav-gap)); 
 }
 
 body {
