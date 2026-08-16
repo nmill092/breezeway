@@ -1,0 +1,52 @@
+---
+import { getImage } from "astro:assets";
+import tornMaskSrc from "assets/images/embellishments/papermask2.png";
+import tornTextureSrc from "assets/images/embellishments/tornpapertexture.jpg";
+
+const tornMask = await getImage({
+  src: tornMaskSrc,
+  format: "webp",
+  width: 1440,
+});
+const tornTexture = await getImage({
+  src: tornTextureSrc,
+  format: "webp",
+  width: 400,
+  quality: 80,
+  priority: true,
+});
+---
+
+<section class="story" id="story">
+  <div class="torn-edge"></div>
+  <div class="container"></div>
+</section>
+
+<style
+  define:vars={{
+    tornMask: `url(${tornMask.src})`,
+    tornTexture: `url(${tornTexture.src})`,
+  }}
+>
+  .story {
+    min-height: 100svh;
+    --torn-edge-height: 40px;
+  }
+
+  .torn-edge {
+    position: relative;
+    height: var(--torn-edge-height);
+    z-index: 0;
+    mask-image: var(--tornMask);
+    mask-repeat: repeat-x;
+    mask-size: 120% 300%;
+    mask-position: 20% 3%;
+    background: var(--tornTexture);
+    background:
+      var(--tornTexture),
+      oklch(from var(--color-accent) calc(l + 0.1) c h / 0.1);
+    background-size: 500px 50%;
+    background-blend-mode: multiply;
+    transform: rotate(180deg);
+  }
+</style>
