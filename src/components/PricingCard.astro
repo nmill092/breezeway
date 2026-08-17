@@ -1,0 +1,269 @@
+---
+import Swoosh from "./Swoosh.astro"
+import SwooshLine from "./SwooshLine.astro"
+import Asterisk from "./Asterisk.astro";
+
+import { getImage } from "astro:assets"; 
+import cardOverlay from 'assets/images/embellishments/notecardoverlay.jpeg'; 
+
+const overlay = await getImage({ 
+  src: cardOverlay, 
+  format: 'webp',
+  width: 400
+}); 
+
+const benefits = [
+  'Unlimited coffee and snacks',
+  'All-you-can-play board games',
+  'Free and fast WiFi',
+  'The comfiest seats in the neighborhood'
+]; 
+
+const price = 5; 
+
+---
+
+<div class="card" data-pricing-card>
+  <div class="card-header">
+    <h3>What's included</h3>
+  </div>
+  <div class="card-body">
+    <ul data-benefits>
+      {
+        benefits.map(benefit => (
+          <li><div aria-hidden="true" class="bullet"><Asterisk/></div>{benefit}</li>
+        ))
+      }
+    </ul>
+    <div class="card-body-bottom" data-card-bottom>
+      <div class="stamp-container">
+        <span class="price"><sup>$</sup>{price} / hour</span>
+        <svg
+          class="border"
+          preserveAspectRatio="none"
+          id="Layer_1"
+          data-name="Layer 1"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 209.01 150.77"
+        >
+          <defs>
+            <filter
+              id="worn-displacement"
+              x="-5%"
+              y="-8%"
+              width="110%"
+              height="116%"
+              color-interpolation-filters="sRGB"
+            >
+              <feTurbulence
+                type="fractalNoise"
+                baseFrequency="0.018 0.075"
+                numOctaves="3"
+                seed="12"
+                result="noise"></feTurbulence>
+
+              <feGaussianBlur in="noise" stdDeviation="0.35" result="soft-noise"
+              ></feGaussianBlur>
+
+              <feDisplacementMap
+                in="SourceGraphic"
+                in2="soft-noise"
+                scale="4.2"
+                xChannelSelector="R"
+                yChannelSelector="G"></feDisplacementMap>
+            </filter>
+          </defs>
+
+          <g id="sticker" filter="url(#worn-displacement)">
+            <rect
+              x=".5"
+              y=".5"
+              width="208.01"
+              height="149.77"
+              rx="3.09"
+              ry="3.09"
+              fill="currentColor"
+              stroke="#a35c44"
+              stroke-miterlimit="10"></rect>
+          </g>
+        </svg>
+      </div>
+      <div class="notes">
+        <div class="checkin">
+          Check in when you arrive. <br />
+          Check out when you leave.
+        </div>
+        <div class="line">
+          <Swoosh/>
+        </div>
+        <div class="discounts">
+          Day passes and student/senior discounts available.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style define:vars={{
+  overlay: overlay.src
+}}>
+  .card {
+    width: clamp(23rem, 42vw, 55rem);
+    display: flex;
+    flex-direction: column;
+    background-color: oklch(98.51% 0 0); 
+    border-radius: 3px;
+    container-type: inline-size; 
+    overflow: hidden;
+    box-shadow:
+      0 1px 2px rgba(60, 45, 25, 0.1),
+      0 10px 24px -8px rgba(60, 45, 25, 0.2);
+    position: relative;
+    font-family: var(--font-typewriter);
+  }
+
+  .card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: url(var(--overlay));
+    mix-blend-mode: multiply;
+    pointer-events: none;
+    opacity: 0.3;
+    background-size: cover;
+  }
+
+  .card-header {
+    height: 10%;
+    border-bottom: 1px solid rgba(168, 74, 72, 0.45);
+    color: rgba(168, 74, 72);
+    font-size: 1.4rem;
+    padding-block: var(--space-3xs);
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    text-transform: uppercase;
+  }
+
+  .card-body {
+    flex-grow: 999;
+    padding-inline: var(--space-s);
+    padding-block: var(--space-md);
+    font-size: var(--fs-md);
+    display: flex;
+    gap: var(--space-s);
+    flex-direction: column;
+    background: repeating-linear-gradient(
+      transparent,
+      transparent 27px,
+      rgba(122, 158, 172, 0.32) 27px,
+      rgba(122, 158, 172, 0.32) 28px
+    );
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      li {
+        line-height: 28px;
+        display: flex;
+        gap: .5rem; 
+        align-items: start;
+
+        .bullet {
+          width: .7rem; 
+          color: var(--color-accent);
+        }
+      }
+    }
+  }
+
+  .card-body-bottom {
+    flex-grow: 999;
+    display: grid;
+    gap: 3rem;
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .notes {
+    align-self: center;
+    color: rgba(168, 74, 72);
+    display: flex;
+    gap: 0.5rem;
+    flex-direction: column;
+
+    .line {
+      width: 20%;
+      margin-block-end: 1rem;
+    }
+
+    .discounts {
+      font-size: 1rem;
+      color: #5a6653;
+      justify-self: end;
+    }
+  }
+
+  .stamp-container {
+    min-width: 0;
+    align-self: center;
+    margin-block: auto;
+    position: relative;
+    font-family: Gloock;
+    width: 150px;
+    z-index: 0;
+    padding-inline: var(--space-xs);
+    padding-block: var(--space-s);
+    transform: rotate(-2deg);
+    filter: drop-shadow(0 0.1rem 0.1rem rgb(70 50 30 / 14%));
+
+    .price {
+      position: relative;
+      z-index: 1;
+      color: #a35c44;
+      font-family: var(--font-heading);
+      font-size: var(--fs-xl);
+      text-wrap: nowrap; 
+      display: block; 
+      transform: translateX(-5px);
+
+      sup {
+        display: inline-block;
+        font-size: 1rem;
+        margin-inline-end: 0.3rem;
+        transform: translateY(-5%);
+      }
+    }
+  }
+
+  .border {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    color: #fafafa;
+    z-index: 0;
+  }
+
+   @container (width <= 34rem) {
+    .card-body-bottom {
+      grid-template-columns: initial;
+      gap: var(--space-xs);
+      place-items: center; 
+      margin-block-start: 1rem; 
+    }
+
+    .stamp-container {
+      transform: rotate(-.5deg);
+    }
+
+    .notes {
+      text-align: center; 
+
+      .line {
+        margin: auto; 
+      }
+    }
+  }
+</style>

@@ -31,7 +31,7 @@ const tornTexture = await getImage({
 <section class="hero" data-hero>
   <div class="container--full-bleed">
     <div class="hero-grid">
-      <div data-hero-image class="hero-photo br">
+      <div data-hero-image data-parallax class="hero-photo br">
         <Polaroid
           img={heroBoardGameImg}
           tapeImg={washi1}
@@ -44,7 +44,7 @@ const tornTexture = await getImage({
         />
       </div>
 
-      <div data-hero-image class="hero-photo tl">
+      <div data-hero-image data-parallax-speed="10" class="hero-photo tl">
         <Polaroid
           img={heroLaptop}
           tapeImg={washi2}
@@ -101,7 +101,7 @@ const tornTexture = await getImage({
     mask-image: var(--tornMask);
     mask-repeat: repeat-x;
     mask-size: 120% 300%;
-    mask-position: 60% 5%; 
+    mask-position: 60% 5%;
     background: var(--tornTexture);
     background:
       var(--tornTexture),
@@ -126,7 +126,7 @@ const tornTexture = await getImage({
   .tl {
     --rotate: -2.2deg;
     order: 2;
-    margin-block-start: 2rem; 
+    margin-block-start: 2rem;
     width: clamp(14rem, 75cqi, 22rem);
   }
 
@@ -169,7 +169,7 @@ const tornTexture = await getImage({
       grid-area: photo1;
       width: clamp(15rem, 16cqi, 20rem);
       order: initial;
-      margin-block-start: initial; 
+      margin-block-start: initial;
     }
     .br {
       grid-area: photo2;
@@ -197,62 +197,71 @@ const tornTexture = await getImage({
 </style>
 
 <script>
-  import gsap from "gsap";
+  import { scoped } from "scripts/gsap";
+  import { gsap, reduced } from "scripts/gsap";
+  import { initParallax } from "scripts/parallax";
 
   const hero = document.querySelector("[data-hero]");
 
   if (hero) {
-    let mm = gsap.matchMedia(hero);
+    const { ctx } = scoped(() => {
+      let mm = gsap.matchMedia(hero);
 
-    mm.add("(prefers-reduced-motion: no-preference)", () => {
-      const images = gsap.utils
-        .toArray("[data-hero-image]")
-        .filter((el) => getComputedStyle(el as HTMLElement).display !== "none");
+      mm.add("(prefers-reduced-motion: no-preference)", () => {
+        const images = gsap.utils
+          .toArray("[data-hero-image]")
+          .filter(
+            (el) => getComputedStyle(el as HTMLElement).display !== "none",
+          );
 
-      const tl = gsap.timeline({
-        delay: 0.2,
-        defaults: {
-          duration: ".8",
-        },
+        const tl = gsap.timeline({
+          delay: 0.2,
+          defaults: {
+            duration: ".8",
+          },
+          onComplete: () => {
+           ctx.add(() => initParallax(hero, "top top"));
+          },
+        });
+
+        tl.from("[data-hero-title] span", {
+          autoAlpha: 0,
+          y: 20,
+        })
+          .from(
+            "[data-hero-swoosh]",
+            {
+              clipPath: "inset(0 100% 0 0)",
+              ease: "power2.out",
+            },
+            "<.3",
+          )
+          .from(
+            "[data-hero-eyebrow]",
+            {
+              autoAlpha: 0,
+              y: 20,
+            },
+            ">.3",
+          )
+          .from(
+            "[data-hero-cta]",
+            {
+              autoAlpha: 0,
+              y: 20,
+            },
+            "<.3",
+          )
+          .from(
+            images,
+            {
+              autoAlpha: 0,
+              "--rotate": 0,
+              stagger: 0.2,
+            },
+            "<.2",
+          );
       });
-
-      tl.from("[data-hero-title] span", {
-        autoAlpha: 0,
-        y: 20,
-      })
-        .from(
-          "[data-hero-swoosh]",
-          {
-            clipPath: "inset(0 100% 0 0)",
-            ease: "power2.out",
-          },
-          "<.3",
-        )
-        .from(
-          "[data-hero-eyebrow]",
-          {
-            autoAlpha: 0,
-            y: 20,
-          },
-          ">.3",
-        )
-        .from(
-          "[data-hero-cta]",
-          {
-            autoAlpha: 0,
-            y: 20,
-          },
-          "<.3",
-        )
-        .from(
-          images,
-          {
-            autoAlpha: 0,
-            "--rotate": 0,
-            stagger: 0.2,
-          },
-          "<.2",
-        );
-    });
+    }, hero);
   }
 </script>

@@ -1,0 +1,136 @@
+---
+import PricingCard from "components/PricingCard.astro";
+import SwooshLine from "components/SwooshLine.astro";
+
+---
+
+<section class="how-it-works" id="how" data-section-how>
+  <div class="container">
+  <div class="scroll-stage">
+    <div class="inner">
+      <div class="content">
+        <h2 class="lede" data-lede data-reveal> 
+          At Breezeway, you only pay<br/>
+          for the <span class="underline">time <div class="line" data-line><SwooshLine/></div></span> you spend.
+        </h2>
+        <PricingCard/>
+      </div>
+    </div>
+  </div>
+  </div>
+</section>
+
+
+<style>
+  
+  .how-it-works {
+    position: relative; 
+  }
+
+  .scroll-stage {
+    height: 100svh; 
+  }
+
+  .inner {
+    height: 100%;
+    width: 100%; 
+    display: grid; 
+    place-items: center; 
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--fs-4xl);
+  }
+
+  .lede {
+    font-size: var(--fs-3xl);
+    line-height: 1; 
+    text-align: center; 
+  }
+
+  .underline {
+    position: relative; 
+  }
+
+  .line {
+    position: absolute; 
+    width: 80%; 
+    left: 0; 
+    bottom: 0; 
+    clip-path: inset(0% 100% 0% 0%);
+  }
+
+  
+
+
+</style>
+
+<script>
+  import { gsap } from "scripts/gsap";
+
+  let mm = gsap.matchMedia(); 
+
+  mm.add('(prefers-reduced-motion: no-preference)', () => {
+
+
+     const lede = document.querySelector('[data-lede]');
+    
+    gsap.set('[data-pricing-card]', { 
+      autoAlpha: 0,
+      y: window.innerHeight * 2, 
+      rotate: -5
+    });
+
+    gsap.set('[data-benefits], [data-card-bottom]', {
+      autoAlpha: 0
+    })
+
+    gsap.set(lede, { 
+      scale: 1.1,
+       yPercent: 50
+    });
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: '[data-section-how]',
+        start: 'top top',
+        end: '+=1000',
+        pin: '.scroll-stage',
+        scrub: 1 
+      }, 
+      defaults: {
+        ease: "power3.inOut",
+        duration: .8
+      }
+    }); 
+
+
+    tl
+      .to(lede, {
+        yPercent: 0, 
+        scale: 1
+      })
+      .to('[data-line]', {
+        clipPath: 'inset(0% 0% 0% 0%)'
+      }, '<.1') 
+      .to('[data-pricing-card]', {
+        autoAlpha: 1,
+        y: 0,
+        ease: 'power3.out',
+        rotate: 2.2 
+      })
+      .to('[data-benefits]', {
+        autoAlpha: 1
+      })
+      .to('[data-card-bottom]', {
+        autoAlpha: 1 
+      }, '<.2')
+
+  })
+
+ 
+
+</script>

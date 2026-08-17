@@ -8,6 +8,7 @@ html {
 body {
   font-family: var(--font-body);
   font-size: var(--fs-md);
+  color: var(--color-body);
 }
 
 :where(h1, h2, h2) {

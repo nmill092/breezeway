@@ -28,7 +28,7 @@ export default defineConfig({
       provider: fontProviders.fontsource(),
       name: "Homemade Apple",
       cssVariable: "--font-homemade-apple",
-      fallbacks: ["system-ui", "sans-serif"]
+      fallbacks: ["cursive", "system-ui", "sans-serif"]
     },
     {
       provider: fontProviders.local(),

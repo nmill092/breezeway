@@ -155,7 +155,7 @@ import NavToggle from "./NavToggle.astro";
 </style>
 
 <script>
-  import gsap from "gsap";
+  import { gsap, reduced } from "../../lib/scripts/gsap";
 
   const setupNav = () => {
     const header = document.querySelector(".header");
@@ -171,9 +171,7 @@ import NavToggle from "./NavToggle.astro";
     const getMenuOpen = () =>
       navToggle.getAttribute("aria-expanded") === "true";
 
-    const prefersReduced = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
+    const prefersReduced = reduced(); 
 
     const openMenu = () => {
       navToggle.setAttribute("aria-expanded", "true");

@@ -12,6 +12,7 @@
   --color-cream-700: oklch(0.941 0.027 84.593); 
 
   --color-offwhite: oklch(96.2% 0 0);
+  --color-offblack: oklch(33.74% 0.01 136.65); 
 
   /* --font-manrope, --font-equateur, --font-jmh-typewriter are declared in astro.config.mjs */ 
 }
@@ -50,11 +51,13 @@
   --color-paper: var(--color-cream-500); 
   --color-paper-text: var(--color-cream-700);
   --color-polaroid: var(--color-offwhite);
+  --color-body: var(--color-offblack);
 
   --font-body: var(--font-manrope);
   --font-heading: var(--font-equateur);
   --font-brand: var(--font-homemade-apple);
-  
+  --font-typewriter: var(--font-jmh-typewriter);
+
   --header-h: 4rem; 
   --nav-gap: 1rem; 
   --page-gutter: var(--space-l);

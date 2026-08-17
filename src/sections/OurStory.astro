@@ -31,7 +31,7 @@ const tornTexture = await getImage({
     <div class="story-wrapper">
      
         <div class="story-lede">
-          <div class="story-title">
+          <div class="story-title" data-reveal>
             <h2>
               Our story
               <div class="swoosh" aria-hidden="true">
@@ -39,7 +39,7 @@ const tornTexture = await getImage({
               </div>
             </h2>
           </div>
-          <div class="story-copy">
+          <div class="story-copy" data-reveal-group>
             <p>
               We built Breezeway in 2022 after the pandemic wiped away some of
               our favorite places to spend time in the city. The spaces where we
@@ -55,7 +55,7 @@ const tornTexture = await getImage({
             </p>
           </div>
         </div>
-         <div class="story-image">
+         <div class="story-image" data-parallax data-reveal>
         <Polaroid
           img={storyImg}
           imgAlt="Three people in a communal lounge area reading, working on a computer, and scrolling on a phone."
@@ -73,8 +73,8 @@ const tornTexture = await getImage({
           aria-hidden="true" 
           format="avif" /> 
       </div>
-        <div class="story-pullquote">
-          <blockquote>
+        <div class="story-pullquote" data-reveal>
+          <blockquote data-reveal>
             <div class="line" aria-hidden="true">
               <SwooshLine />
             </div>
@@ -249,3 +249,16 @@ const tornTexture = await getImage({
     transform: translateY(-2px) rotate(180deg);
   }
 </style>
+
+<script>
+import { initParallax } from "scripts/parallax";
+import { initReveal } from "../lib/scripts/reveal";
+
+const root = document.querySelector(".story") as HTMLElement; 
+
+if (root) {
+  initReveal(root);
+  initParallax(root); 
+}
+
+</script>
