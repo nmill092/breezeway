@@ -53,6 +53,8 @@
 
   --font-body: var(--font-manrope);
   --font-heading: var(--font-equateur);
+  --font-brand: var(--font-homemade-apple);
+  
   --header-h: 4rem; 
   --nav-gap: 1rem; 
   --page-gutter: var(--space-l);

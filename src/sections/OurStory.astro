@@ -2,6 +2,14 @@
 import { getImage } from "astro:assets";
 import tornMaskSrc from "assets/images/embellishments/papermask2.png";
 import tornTextureSrc from "assets/images/embellishments/tornpapertexture.jpg";
+import Swoosh from "components/Swoosh.astro";
+import SwooshLine from "components/SwooshLine.astro";
+import Polaroid from "components/Polaroid.astro";
+
+import storyImg from "assets/images/ourstory.jpg";
+import tape from "assets/images/embellishments/washi-3.png";
+import flowerOverlay from "assets/images/embellishments/flower.png";
+import { Image } from "astro:assets";
 
 const tornMask = await getImage({
   src: tornMaskSrc,
@@ -19,7 +27,65 @@ const tornTexture = await getImage({
 
 <section class="story" id="story">
   <div class="torn-edge"></div>
-  <div class="container"></div>
+  <div class="container">
+    <div class="story-wrapper">
+     
+        <div class="story-lede">
+          <div class="story-title">
+            <h2>
+              Our story
+              <div class="swoosh" aria-hidden="true">
+                <Swoosh />
+              </div>
+            </h2>
+          </div>
+          <div class="story-copy">
+            <p>
+              We built Breezeway in 2022 after the pandemic wiped away some of
+              our favorite places to spend time in the city. The spaces where we
+              used to feel most at home were replaced by boutique cafés with no
+              seating, subscription-based coworking businesses, and faceless chain
+              coffee shops.
+            </p>
+            <p>
+              Breezeway is so much more than a coworking space or a café. It’s a place
+              where we welcome our South Philly neighbors of all ages,
+              professions, and backgrounds to walk in, grab a coffee or board
+              game, and take up space for as long as they need.
+            </p>
+          </div>
+        </div>
+         <div class="story-image">
+        <Polaroid
+          img={storyImg}
+          imgAlt="Three people in a communal lounge area reading, working on a computer, and scrolling on a phone."
+          variant="portrait"
+          width={600}
+          paddingVariant="lg"
+          tapeImg={tape}
+          tapeRotation="1deg"
+        />
+        <Image
+          class="flower"
+          src={flowerOverlay} 
+          width="500"
+          alt="" 
+          aria-hidden="true" 
+          format="avif" /> 
+      </div>
+        <div class="story-pullquote">
+          <blockquote>
+            <div class="line" aria-hidden="true">
+              <SwooshLine />
+            </div>
+            <span>No memberships or velvet ropes.</span>
+            <span>Everyone is welcome here.</span>
+          </blockquote>
+        </div>
+     
+     
+    </div>
+  </div>
 </section>
 
 <style
@@ -29,8 +95,141 @@ const tornTexture = await getImage({
   }}
 >
   .story {
-    min-height: 100svh;
     --torn-edge-height: 40px;
+    container-type: inline-size;
+    min-height: 100svh; 
+    display: grid; 
+    align-items: center;
+    grid-template-rows: auto 1fr; 
+  }
+
+  .story-content {
+    display: flex; 
+    flex-direction: column;
+    gap: var(--space-xl);
+  }
+
+
+  .story-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xl);
+    padding-block-start: var(--space-2xl);
+  }
+
+  .story-lede {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl); /* tighter rhythm within title + copy */
+  }
+
+  .story-title {
+    font-size: var(--fs-xl);
+
+    h2 {
+      font-family: var(--font-brand);
+      position: relative;
+      display: inline-block;
+
+      .swoosh {
+        position: absolute;
+        width: 70%;
+        top: 75%;
+        left: 0;
+        margin-inline: auto;
+        margin-block-start: var(--space-3xs);
+        color: var(--color-accent);
+      }
+    }
+  }
+
+  .story-copy {
+    max-width: 65ch;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-s);
+    text-wrap: pretty; 
+  }
+
+  .story-pullquote {
+    blockquote {
+      color: var(--color-accent);
+      font-family: var(--font-heading);
+      font-size: var(--fs-xl);
+      line-height: 1.2;
+      letter-spacing: -0.2;
+      text-align: center; 
+
+      span {
+        display: block;
+      }
+
+      .line {
+        width: clamp(13rem, 12cqi, 15rem);
+        margin-block-end: var(--space-xs);
+        margin-inline: auto; 
+      }
+    }
+  }
+
+  .story-image {
+    width: clamp(21rem, 30cqi, 27rem);
+    margin: auto;
+    transform: rotate(1deg);
+    position: relative; 
+    container-type: inline-size; 
+
+    .flower {
+      position: absolute; 
+      bottom: -10%;
+      right: -25%;  
+      width: 55cqi; 
+      height: auto; 
+    }
+  }
+
+  @container (width < 30rem) {
+    .story-pullquote {
+      margin-inline-start: 0;
+      font-size: 1.1rem;
+    }
+  }
+
+  @media (width >= 55rem) {
+    .story-wrapper {
+      display: grid; 
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      grid-template-areas: 
+        "image lede"
+        "image pullquote";
+      align-items: start; 
+      gap: var(--space-3xl);
+    }
+
+    .story-lede {
+      grid-area: lede; 
+    }
+
+    .story-pullquote {
+      grid-area: pullquote; 
+      
+      blockquote {
+        text-align: left; 
+
+        .line {
+          margin-inline: 0;
+        }
+      }
+    }
+    
+    .story-image {
+      grid-area: image; 
+      transform: rotate(2deg);
+    }
+
+    .story-wrapper {
+      padding-block-start: 0;
+    }
   }
 
   .torn-edge {
@@ -47,6 +246,6 @@ const tornTexture = await getImage({
       oklch(from var(--color-accent) calc(l + 0.1) c h / 0.1);
     background-size: 500px 50%;
     background-blend-mode: multiply;
-    transform: rotate(180deg);
+    transform: translateY(-2px) rotate(180deg);
   }
 </style>

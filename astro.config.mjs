@@ -25,6 +25,12 @@ export default defineConfig({
       fallbacks: ["system-ui", "sans-serif"]
     },
     {
+      provider: fontProviders.fontsource(),
+      name: "Homemade Apple",
+      cssVariable: "--font-homemade-apple",
+      fallbacks: ["system-ui", "sans-serif"]
+    },
+    {
       provider: fontProviders.local(),
       name: "JMH Typewriter",
       cssVariable: "--font-jmh-typewriter",
