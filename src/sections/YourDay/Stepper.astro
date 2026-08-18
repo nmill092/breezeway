@@ -1,0 +1,88 @@
+---
+import { sections } from "./data";
+---
+
+<ol aria-hidden class="day-stepper">
+  {
+    sections.map((section, i) => (
+      <li data-stepper={i} class:list={["stepper-step", { active: i === 0 }]}>
+        <span class="stepper-title">{section.title}</span>
+        <div class="stepper-dot" />
+        <span class="stepper-time">{section.displayTime}</span>
+      </li>
+    ))
+  }
+</ol>
+
+<style>
+  .day-stepper {
+    --gap-size: var(--space-3xl);
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    font-size: var(--fs-s);
+    margin-block-start: var(--space-md);
+    position: relative;
+  }
+
+  .stepper-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1 1 0;
+    gap: var(--space-2xs);
+    position: relative;
+    z-index: 1;
+
+    &:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      top: 49%;
+      left: 50%;
+      height: 1px;
+      width: 100%;
+      border-top: 1px dotted var(--color-ink);
+      z-index: -1;
+    }
+  }
+
+  .stepper-dot {
+    border-radius: 100%;
+    aspect-ratio: 1;
+    height: 15px;
+    background-color: oklch(from var(--color-accent) l calc(c - 0.08) h);
+    position: relative;
+
+    &::after {
+      position: absolute;
+      content: "";
+      height: 10%;
+      aspect-ratio: 1;
+      border: 1px solid var(--color-accent);
+      border-radius: 100%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      opacity: 0;
+      transition: 0.3s ease all;
+    }
+
+    .active > & {
+      background-color: var(--color-accent);
+      z-index: 99;
+
+      &::after {
+        height: 200%;
+        opacity: 1;
+      }
+    }
+  }
+
+  .stepper-title {
+    color: oklch(from var(--color-accent) l calc(c - 0.08) h);
+
+    .active > & {
+      color: var(--color-accent);
+    }
+  }
+</style>

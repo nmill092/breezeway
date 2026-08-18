@@ -25,7 +25,7 @@ const tornTexture = await getImage({
 });
 ---
 
-<section class="story" id="story">
+<section class="story" id="story" data-section-story>
   <div class="torn-edge"></div>
   <div class="container">
     <div class="story-wrapper">
@@ -55,7 +55,7 @@ const tornTexture = await getImage({
             </p>
           </div>
         </div>
-         <div class="story-image" data-parallax data-reveal>
+         <div class="story-image" data-parallax data-parallax-speed="10" data-reveal>
         <Polaroid
           img={storyImg}
           imgAlt="Three people in a communal lounge area reading, working on a computer, and scrolling on a phone."
@@ -254,7 +254,7 @@ const tornTexture = await getImage({
 import { initParallax } from "scripts/parallax";
 import { initReveal } from "../lib/scripts/reveal";
 
-const root = document.querySelector(".story") as HTMLElement; 
+const root = document.querySelector("[data-section-story]") as HTMLElement; 
 
 if (root) {
   initReveal(root);

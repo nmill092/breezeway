@@ -1,0 +1,263 @@
+---
+import Clock from "components/Clock.astro";
+import Polaroid from "components/Polaroid.astro";
+import SwooshLine from "components/SwooshLine.astro";
+import { sections } from "./data";
+import Stepper from "./Stepper.astro";
+---
+
+<section class="your-day" id="day" data-section-yourday>
+  <div class="container">
+    <div class="day-wrapper" data-day-wrapper>
+      <h2 class="day-heading">
+        <span class="underline"
+          >Your day
+          <div class="line" data-line><SwooshLine /></div>
+        </span> at Breezeway
+      </h2>
+      <p class="subhead">
+        Scroll to find out what a day at Breezeway might look like.
+      </p>
+      <div class="day-feature">
+        <div class="clock">
+          <Clock />
+        </div>
+        <div class="content">
+          {
+            sections.map((section) => (
+              <div
+                class="day-step"
+                data-step
+                style={`--rotation: ${section.rotation}deg`}
+              >
+                <div class="step-meta">
+                  <div class="display-time">{section.displayTime}</div>
+                  <h3 class="step-title">{section.title}</h3>
+                </div>
+                <div class="step-text">{section.text}</div>
+                <div class="step-image">
+                  <Polaroid
+                    img={section.image}
+                    imgAlt={section.imageAlt}
+                    variant="landscape"
+                    width={800}
+                  />
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+      <Stepper />
+    </div>
+  </div>
+</section>
+<style>
+  .your-day {
+    position: relative;
+  }
+
+  .day-wrapper {
+    min-height: 100svh;
+    display: grid;
+    align-content: center;
+    container-type: inline-size;
+    gap: var(--fs-md);
+  }
+
+  .day-heading {
+    font-size: var(--fs-3xl);
+    text-align: center;
+    line-height: 1;
+    letter-spacing: -4%;
+  }
+
+  .subhead {
+    text-align: center;
+    font-size: var(--fs-lg);
+  }
+
+  .day-feature {
+    margin-block-start: var(--space-xl);
+    display: flex;
+    gap: var(--space-xl);
+    justify-content: center;
+  }
+
+  .content {
+    min-width: 0;
+    flex: 0 1 auto;
+    position: relative;
+    container-type: inline-size;
+    min-height: 30rem;
+    width: min(100%, 34rem);
+  }
+
+  .clock {
+    min-width: 0;
+    width: clamp(20rem, 33cqi, 52rem);
+  }
+
+  .underline {
+    position: relative;
+  }
+
+  .line {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    bottom: -15%;
+  }
+
+  .day-step {
+    display: grid;
+    position: absolute;
+    inset: 0;
+    gap: var(--space-xs);
+  }
+
+  .display-time {
+    font-family: var(--font-typewriter);
+    letter-spacing: 15%;
+    color: var(--color-accent);
+  }
+
+  .step-title {
+    font-size: var(--fs-xl);
+    line-height: 1;
+  }
+
+  .step-image {
+    width: min(100%, 28rem);
+    transform: rotate(var(--rotation));
+  }
+
+  .step-meta {
+    display: grid;
+  }
+
+  .step-text {
+    max-width: 40ch;
+  }
+</style>
+
+<script>
+  import { gsap, scoped } from "scripts/gsap";
+  import { sections } from "./data";
+
+  const root = document.querySelector("[data-section-yourday]");
+
+  if (root) {
+    scoped(() => {
+      const minToAngle = (min: number) => min * 6;
+      const hourToAngle = (hour: number, min: number) =>
+        30 * (hour % 12) + min / 2;
+
+      const stepsWithAngles = sections.map((section) => ({
+        ...section,
+        hourAngle: hourToAngle(section.hours, section.minutes),
+        minuteAngle: minToAngle(section.minutes),
+      }));
+
+      const face = document.querySelector(
+        "[data-clock-face]",
+      ) as SVGCircleElement;
+
+      if (face) {
+        const cx = face.cx.baseVal.value;
+        const cy = face.cy.baseVal.value;
+        console.log({ cx, cy });
+
+        gsap.set("[data-hour-hand], [data-minute-hand]", {
+          svgOrigin: `${cx} ${cy}`,
+          rotation: 0,
+        });
+      }
+
+      gsap.set("[data-hour-hand]", {
+        rotation: stepsWithAngles[0].hourAngle,
+      });
+
+      gsap.set("[data-minute-hand]", {
+        rotation: stepsWithAngles[0].minuteAngle,
+      });
+
+      const steps = gsap.utils.toArray("[data-step]") as Element[];
+      gsap.set(steps.slice(1), { autoAlpha: 0 });
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: root,
+          start: "top top",
+          end: "+=2500",
+          pin: "[data-day-wrapper]",
+          scrub: 1,
+        },
+      });
+
+      const stepHold = 1.4;
+      const stepFade = 0.4;
+      const stepDuration = stepHold + stepFade;
+
+      const stepMarkers = document.querySelectorAll("[data-stepper]");
+
+      let activeStep = -1;
+
+      const setActiveStep = (i: number) => {
+        stepMarkers.forEach((step) => {
+          step.classList.toggle(
+            "active",
+            Number((step as HTMLElement).dataset.stepper) === i,
+          );
+        });
+      };
+
+      const syncActiveStep = () => {
+        const index = gsap.utils.clamp(
+          0,
+          steps.length - 1,
+          Math.floor(tl.time() / (stepHold + stepFade)),
+        );
+
+        if (index !== activeStep) {
+          activeStep = index;
+          setActiveStep(index);
+        }
+      };
+
+      setActiveStep(0);
+      activeStep = 0;
+
+      steps.forEach((step, i) => {
+        const at = i * stepDuration;
+
+        tl.to(step, { autoAlpha: 1, duration: stepFade }, at)
+          .to(
+            steps[i - 1] ?? step,
+            { autoAlpha: i === 0 ? 1 : 0, duration: stepFade },
+            at,
+          )
+          .to(
+            "[data-hour-hand]",
+            {
+              rotation: `${stepsWithAngles[i].hourAngle}_cw`,
+              duration: stepFade,
+              ease: "power3.out",
+            },
+            at,
+          )
+          .to(
+            "[data-minute-hand]",
+            {
+              rotation: `${stepsWithAngles[i].minuteAngle}_cw`,
+              duration: stepFade,
+              ease: "power3.out",
+            },
+            at,
+          );
+
+        tl.eventCallback("onUpdate", syncActiveStep);
+      });
+    }, root);
+  }
+</script>

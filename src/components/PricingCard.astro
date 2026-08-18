@@ -23,7 +23,7 @@ const price = 5;
 
 ---
 
-<div class="card" data-pricing-card>
+<div class="card" data-pricing-card data-parallax>
   <div class="card-header">
     <h3>What's included</h3>
   </div>
@@ -143,6 +143,11 @@ const price = 5;
     justify-content: center;
     align-items: end;
     text-transform: uppercase;
+
+    h3 {
+      font-family: var(--font-typewriter);
+      color: var(--color-accent);
+    }
   }
 
   .card-body {

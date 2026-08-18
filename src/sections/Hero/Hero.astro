@@ -61,7 +61,7 @@ const tornTexture = await getImage({
       <div data-hero-image class="hero-illustration tr">
         <HeroChess />
       </div>
-      <div data-hero-image class="hero-illustration bl">
+      <div data-hero-image class="hero-illustration data-parallax data-parallax-speed="8" bl">
         <HeroHiFive />
       </div>
     </div>
@@ -198,7 +198,7 @@ const tornTexture = await getImage({
 
 <script>
   import { scoped } from "scripts/gsap";
-  import { gsap, reduced } from "scripts/gsap";
+  import { gsap } from "scripts/gsap";
   import { initParallax } from "scripts/parallax";
 
   const hero = document.querySelector("[data-hero]");
