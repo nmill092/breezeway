@@ -1,9 +1,6 @@
 ---
 import BaseLayout from "layouts/BaseLayout.astro";
-import Hero from "../sections/Hero/Hero.astro";
-import OurStory from "../sections/OurStory.astro";
-import HowItWorks from "../sections/HowItWorks.astro";
-import YourDay from "../sections/YourDay/YourDay.astro";
+import { Hero, OurStory, HowItWorks, YourDay, WhatsOn } from '../sections'; 
 ---
 
 <BaseLayout>
@@ -11,6 +8,7 @@ import YourDay from "../sections/YourDay/YourDay.astro";
   <OurStory/>
   <HowItWorks/>
   <YourDay/>
+  <WhatsOn/>
 </BaseLayout>
 
 <style>

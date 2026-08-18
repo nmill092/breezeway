@@ -1,9 +1,12 @@
 // @ts-check
 import { defineConfig, fontProviders } from "astro/config";
 
+import svelte from "@astrojs/svelte";
+
 export default defineConfig({
   site: "https://breezeway.nilemiller.dev/",
   trailingSlash: "always",
+
   fonts: [
     {
       provider: fontProviders.local(),
@@ -44,4 +47,6 @@ export default defineConfig({
       },
     },
   ],
+
+  integrations: [svelte()],
 });
