@@ -4,9 +4,9 @@ import Events from "./Events.svelte";
 
 import { events } from "./events";
 
-import paperTexture from 'assets/images/embellishments/notecardoverlay.jpeg'; 
-import tapeOverlay from 'assets/images/embellishments/washi-4.png'; 
-import SwooshLine from "components/SwooshLine.astro";
+import paperTexture from 'assets/images/embellishments/notecardoverlay.jpeg';
+import tapeOverlay from 'assets/images/embellishments/washi-4.png';
+import UnderlinedText from "components/UnderlinedText.astro";
 
 
 const eventsWithImages = await Promise.all(events.map(async event => ({
@@ -33,16 +33,13 @@ const tape = await getImage({
 
 ---
 
-<section class="whats-on" id="whatson" data-section-whatson>
+<section class="whatson" id="whatson" data-section-whatson>
   <div class="container">
     <div class="whatson__wrapper">
       <div class="whatson__header">
         
-        <h2 class="whatson__title">
-        <span class="underline"
-          >What's On
-          <div class="line" data-line><SwooshLine /></div>
-        </span> at Breezeway
+      <h2 class="whatson__title">
+        <UnderlinedText>What's On</UnderlinedText> at Breezeway
       </h2>
       <p class="whatson__lede">
         Whether you’re a musician, a chess grandmaster, or just looking to connect with members of the community, there’s something for you  at Breezeway. Use the filters below to find events that match your interests.
@@ -56,22 +53,22 @@ const tape = await getImage({
 
 
 <style>
- .whats-on {
-  /* height: 100svh;  */
- }
+
+.whatson {
+  padding-block: var(--section-spacing); 
+}
 
  .whatson__wrapper {
   display: flex;
   flex-direction: column;
   gap: var(--space-2xl); 
-  padding-block-start: var(--space-3xl);
  }
 
  .whatson__title {
   font-size: var(--fs-3xl);
-  line-height: 1; 
+  line-height: 1.1; 
   text-align: center;
-
+  /* text-wrap: nowrap;  */
  }
 
  .whatson__header {
@@ -84,15 +81,4 @@ const tape = await getImage({
  .whatson__lede {
   max-width: 65ch; 
  }
-
-   .underline {
-    position: relative;
-  }
-
-  .line {
-    position: absolute;
-    width: 100%;
-    left: 0;
-    bottom: -3%;
-  }
 </style> 

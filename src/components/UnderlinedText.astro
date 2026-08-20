@@ -1,0 +1,28 @@
+---
+const { offsetPct = 0, scale = 1 } = Astro.props; 
+import SwooshLine from "components/SwooshLine.astro";
+---
+
+<span class="underline">
+  <slot/>
+  <span 
+    class="line" 
+    style={`--offset: ${offsetPct}%; --scale: ${scale}`}
+    data-line>
+    <SwooshLine/>
+  </span>
+</span>
+
+<style>
+   .underline {
+    position: relative;
+  }
+
+  .line {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    bottom: var(--offset);
+    scale: var(--scale);
+  }
+</style>

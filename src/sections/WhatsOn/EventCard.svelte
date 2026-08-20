@@ -1,23 +1,24 @@
 <script lang="ts">
   import type { Event } from "./events";
 
-  const { 
-    tape, 
+  const {
+    tape,
     texture,
-    event 
-  }: { 
-    tape: ImageMetadata, 
-    texture: ImageMetadata, 
-    event: Event 
+    event,
+  }: {
+    tape: ImageMetadata;
+    texture: ImageMetadata;
+    event: Event;
   } = $props();
 
-  const ROTATION_MIN = -1;
-  const ROTATION_MAX = 1;
+  const ROTATION_MIN = -1.2;
+  const ROTATION_MAX = 1.2;
   const rotation = Math.random() * (ROTATION_MAX - ROTATION_MIN) + ROTATION_MIN;
 
   const TAPE_ROTATION_MIN = -2;
   const TAPE_ROTATION_MAX = 2;
-  const tapeRotation = Math.random() * (TAPE_ROTATION_MAX - TAPE_ROTATION_MIN) + TAPE_ROTATION_MIN;
+  const tapeRotation =
+    Math.random() * (TAPE_ROTATION_MAX - TAPE_ROTATION_MIN) + TAPE_ROTATION_MIN;
 
   const timeZone = "UTC";
 
@@ -28,13 +29,13 @@
   };
 
   const dateOptions: Intl.DateTimeFormatOptions = {
-    month: "short", 
-    day: "numeric" , 
-    weekday: 'short',
+    month: "short",
+    day: "numeric",
+    weekday: "short",
     timeZone,
   };
 
-  const pad = (value: number) => String(value).padStart(2, '0');
+  const pad = (value: number) => String(value).padStart(2, "0");
   const clampMonth = (month: number) => Math.max(0, Math.min(month, 11));
 
   const timeRangeFormatter = new Intl.DateTimeFormat("en-US", timeRangeOptions);
@@ -57,98 +58,103 @@
     );
 
     return {
-      dateStr: dateFormatter.format(start),      // just assuming all events start and end on the same date
-      timeRangeStr: timeRangeFormatter.formatRange(start, end).replace(/\s/gi, ''),
-      dateTime: `${year}-${pad(month)}-${pad(monthday)}` // for <time> 
+      dateStr: dateFormatter.format(start), // just assuming all events start and end on the same date
+      timeRangeStr: timeRangeFormatter
+        .formatRange(start, end)
+        .replace(/\s/gi, ""),
+      dateTime: `${year}-${pad(month)}-${pad(monthday)}`, // for <time>
     };
   };
 
-  const { 
-    dateStr, 
-    timeRangeStr, 
-    dateTime
-  } = $derived(buildDateString(event));
-
+  const { dateStr, timeRangeStr, dateTime } = $derived(buildDateString(event));
 </script>
 
-<article 
-  class="event-card shadow-low" 
+<article
+  class="event-card shadow-low"
   style:--rotation={`${rotation}deg`}
   style:--tapeRotation={`${tapeRotation}deg`}
-  style:--texture={`url("${texture.src}")`}>
+  style:--texture={`url("${texture.src}")`}
+>
   <div aria-hidden="true" class="event-card__tape">
-    <img src={tape.src} width={tape.width} height={tape.height} alt=""/>
+    <img src={tape.src} width={tape.width} height={tape.height} alt="" />
   </div>
   <div class="event-card__image">
     <img alt={event.imageAlt} src={event.image.src} />
   </div>
   <div class="event-card__content">
-  <div class="event-card__datetime">
-    <time datetime={dateTime}>{ dateStr }</time> <span>•</span> { timeRangeStr }
+    <div class="event-card__datetime">
+      <time datetime={dateTime}>{dateStr}</time> <span>•</span>
+      {timeRangeStr}
+    </div>
+    <h3 class="event-card__title">{event.title}</h3>
+    <div class="event-card__description">
+      {@html event.description}
+    </div>
+    <div class="event-card__category">
+      {event.category}
+    </div>
   </div>
-  <h3 class="event-card__title">{ event.title }</h3>
-  <div class="event-card__description">
-    {@html event.description}
-  </div>
- <div class="event-card__category">
-    { event.category }
-  </div>
-  </div>
-   
 </article>
 
 <style>
   .event-card {
     aspect-ratio: 4 / 5;
-    --card-radius: .15rem; 
+    --card-radius: 0.15rem;
     transform: rotate(var(--rotation));
     padding-inline: var(--space-xs);
     padding-block-end: var(--space-xs);
     padding-block-start: var(--space-md);
     border-radius: var(--card-radius);
-    display: flex; 
+    display: flex;
     flex-direction: column;
     gap: var(--space-2xs);
     background: 
-    /* var(--texture), */
-      oklch(98.6% 0.02 86.42);
-      /* background-blend-mode: overlay;  */
-      position: relative; 
-    background-size: 100% 100%; 
+    /* var(--texture), */ oklch(98.6% 0.02 86.42);
+    /* background-blend-mode: overlay;  */
+    position: relative;
+    background-size: 100% 100%;
+    transition:
+      0.2s transform ease,
+      0.2s scale ease;
+
+    &:hover {
+      transform: rotate(0);
+      scale: 1.02;
+    }
   }
 
   .event-card__content {
     display: flex;
     flex-direction: column;
-    flex: 1; 
+    flex: 1;
     gap: var(--space-2xs);
     min-height: 0;
   }
 
   .event-card__description {
-    line-height: 1.3; 
+    line-height: 1.3;
     font-size: var(--fs-s);
     display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 4;
-  overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+    overflow: hidden;
   }
 
   .event-card__tape {
-    width: 33%; 
-    position: absolute; 
-    top: -5%; 
-    left: 50%; 
+    width: 33%;
+    position: absolute;
+    top: -5%;
+    left: 50%;
     transform: translateX(-50%);
     rotate: var(--tapeRotation);
   }
   .event-card__title {
     font-size: var(--fs-lg);
-    line-height: 1; 
+    line-height: 1;
   }
 
   .event-card__datetime {
-    display: flex; 
+    display: flex;
     gap: var(--space-2xs);
     font-family: var(--font-typewriter);
     color: var(--color-accent);
@@ -157,7 +163,7 @@
   }
 
   .event-card__image {
-    aspect-ratio: 16 / 9; 
+    aspect-ratio: 16 / 9;
     overflow: hidden;
     border-radius: var(--card-radius);
     flex-shrink: 0;
@@ -166,23 +172,28 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
+      transition: scale 0.2s ease;
+
+      .event-card:hover & {
+        scale: 1.05;
+      }
     }
   }
 
-  .event-card__category { 
-    text-transform: uppercase; 
+  .event-card__category {
+    text-transform: uppercase;
     color: var(--color-accent);
     font-size: var(--fs-s);
-    margin-block-start: auto; 
+    margin-block-start: auto;
   }
 
   @media (width >= 60rem) {
-  .event-card {
-    aspect-ratio: 3 / 4;
-  }
+    .event-card {
+      aspect-ratio: 3 / 4;
+    }
 
-  .event-card__image {
-    aspect-ratio: 3 / 2; 
+    .event-card__image {
+      aspect-ratio: 3 / 2;
+    }
   }
-}
 </style>
