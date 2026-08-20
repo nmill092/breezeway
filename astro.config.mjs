@@ -49,4 +49,10 @@ export default defineConfig({
   ],
 
   integrations: [svelte()],
+
+  vite: {
+    server: {
+      allowedHosts: true,
+    },
+  },
 });
