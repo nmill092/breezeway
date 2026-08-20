@@ -9,7 +9,7 @@ import cardOverlay from 'assets/images/embellishments/notecardoverlay.jpeg';
 const overlay = await getImage({ 
   src: cardOverlay, 
   format: 'webp',
-  width: 400
+  width: 600
 }); 
 
 const benefits = [
@@ -105,7 +105,7 @@ const price = 5;
 </div>
 
 <style define:vars={{
-  overlay: overlay.src
+  overlay: `url("${overlay.src}")`
 }}>
   .card {
     width: clamp(23rem, 42vw, 55rem);
@@ -126,10 +126,10 @@ const price = 5;
     content: "";
     position: absolute;
     inset: 0;
-    background: url(var(--overlay));
+    background: var(--overlay);
     mix-blend-mode: multiply;
     pointer-events: none;
-    opacity: 0.3;
+    opacity: 0.2;
     background-size: cover;
   }
 
