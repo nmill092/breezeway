@@ -1,12 +1,16 @@
 // @ts-check
 import { defineConfig, fontProviders } from "astro/config";
+import { loadEnv } from "vite";
 
 import svelte from "@astrojs/svelte";
+
+const { ADOBE_ID } = loadEnv(process.env.NODE_ENV, process.cwd(), "");
+console.log({ ADOBE_ID })
 
 export default defineConfig({
   site: "https://breezeway.nilemiller.dev/",
   trailingSlash: "always",
-
+  
   fonts: [
     {
       provider: fontProviders.local(),
@@ -34,20 +38,12 @@ export default defineConfig({
       fallbacks: ["cursive", "system-ui", "sans-serif"]
     },
     {
-      provider: fontProviders.local(),
-      name: "JMH Typewriter",
-      cssVariable: "--font-jmh-typewriter",
+      provider: fontProviders.adobe({ id: ADOBE_ID }),
+      name: "Nitti Typewriter Normal",
+      cssVariable: "--font-nitti-typewriter",
       fallbacks: ["monospace"],
-      options: {
-        variants: [
-          {
-            src: ["./src/assets/fonts/JMH-Typewriter.regular.woff2"],
-          },
-        ],
-      },
     },
   ],
-
   integrations: [svelte()],
 
   vite: {

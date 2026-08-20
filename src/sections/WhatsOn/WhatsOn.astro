@@ -1,0 +1,80 @@
+---
+import { getImage } from "astro:assets";
+import Events from "./Events.svelte";
+
+import { events } from "./events";
+
+import paperTexture from 'assets/images/embellishments/notecardoverlay.jpeg'; 
+import tapeOverlay from 'assets/images/embellishments/washi-4.png'; 
+
+const eventsWithImages = await Promise.all(events.map(async event => ({
+  ...event, 
+  image: await getImage({
+    src: event.image, 
+    format: "webp",
+    width: 600,
+    quality: 70
+  })
+}))); 
+
+const texture = await getImage({
+  src: paperTexture,
+  format: "webp",
+  width: 400
+}); 
+
+const tape = await getImage({
+  src: tapeOverlay,
+  format: "webp",
+  width: 400
+}); 
+
+---
+
+<section class="whats-on" id="whatson" data-section-whatson>
+  <div class="container">
+    <div class="whatson__wrapper">
+      <div class="whatson__header">
+        <h2 class="whatson__title">
+          What's On at Breezeway
+        </h2>
+      <p class="whatson__lede">
+        Whether you’re a musician, a chess grandmaster, or just looking to connect with members of the community, there’s an event for you  at Breezeway.
+      </p>
+    </div>
+    <Events tape={tape} texture={texture} events={eventsWithImages} client:visible />
+
+    </div>
+  </div>
+</section>
+
+
+<style>
+ .whats-on {
+  /* height: 100svh;  */
+ }
+
+ .whatson__wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xl); 
+  padding-block-start: var(--space-3xl);
+ }
+
+ .whatson__title {
+  font-size: var(--fs-3xl);
+  line-height: 1; 
+ }
+
+ .whatson__header {
+  display: flex; 
+  gap: var(--space-3xs);
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+ }
+
+ .whatson__lede {
+  max-width: 65ch; 
+ }
+</style> 
