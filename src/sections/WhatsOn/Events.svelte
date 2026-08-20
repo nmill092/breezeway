@@ -1,7 +1,7 @@
 <script lang="ts">
+  import { prefersReducedMotion } from 'svelte/motion';
   import { SvelteSet } from "svelte/reactivity";
-  import { fade, fly } from "svelte/transition";
-  import { flip } from "svelte/animate";
+  import { fade } from "svelte/transition";
 
   import EventCard from "./EventCard.svelte";
   import EventChip from "./EventChip.svelte";
@@ -39,7 +39,8 @@
 </script>
 
 <div class="events__wrapper">
-  <div class="events__chips">
+<div class="events__filters">
+  <div class="events__chips" role="group" aria-label="Filter events">
     <EventChip onClick={clearFilters} category={"All"} isActive={selectedCategories.size === 0} />
     {#each categories as category}
       <EventChip
@@ -49,13 +50,13 @@
       />
     {/each}
   </div>
+  </div>
 
   <ul class="events__grid">
     {#each filteredEvents as event (event.id)}
       <li 
-        in:fade={{ duration: 200 }}
-        out:fade={{ duration: 200 }}
-        animate:flip={{ duration: 350 }}>
+        in:fade={{ duration: prefersReducedMotion.current ? 0 : 300 }}
+        >
         <EventCard {tape} {texture} {event} />
       </li>
     {/each}
@@ -69,17 +70,33 @@
     gap: var(--space-xl);
   }
 
-  .events__chips {
-    display: flex;
-    gap: var(--space-2xs);
-    justify-content: start;
-    background-color: var(--color-paper);
-    position: sticky; 
-    top: calc(var(--nav-gap) + var(--header-h));
-    padding-block-end: var(--space-md);
-    z-index: 999;
-    overflow-x: scroll;
-  }
+  .events__filters {
+  position: sticky;
+  top: calc(var(--nav-gap) + var(--header-h));
+  z-index: 10;
+
+  padding-block: var(--space-s);
+  isolation: isolate;
+}
+
+.events__filters::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+
+  inset-block: 0;
+  left: 50%;
+  width: 100vw;
+  transform: translateX(-50%);
+
+  background-color: var(--color-paper);
+}
+
+.events__chips {
+  display: flex;
+  gap: var(--space-2xs);
+  overflow-x: auto;
+}
 
   .events__grid {
     --card-size: 18rem;

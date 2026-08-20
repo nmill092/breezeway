@@ -6,6 +6,8 @@ import { events } from "./events";
 
 import paperTexture from 'assets/images/embellishments/notecardoverlay.jpeg'; 
 import tapeOverlay from 'assets/images/embellishments/washi-4.png'; 
+import SwooshLine from "components/SwooshLine.astro";
+
 
 const eventsWithImages = await Promise.all(events.map(async event => ({
   ...event, 
@@ -35,11 +37,15 @@ const tape = await getImage({
   <div class="container">
     <div class="whatson__wrapper">
       <div class="whatson__header">
+        
         <h2 class="whatson__title">
-          What's On at Breezeway
-        </h2>
+        <span class="underline"
+          >What's On
+          <div class="line" data-line><SwooshLine /></div>
+        </span> at Breezeway
+      </h2>
       <p class="whatson__lede">
-        Whether you’re a musician, a chess grandmaster, or just looking to connect with members of the community, there’s an event for you  at Breezeway.
+        Whether you’re a musician, a chess grandmaster, or just looking to connect with members of the community, there’s something for you  at Breezeway. Use the filters below to find events that match your interests.
       </p>
     </div>
     <Events tape={tape} texture={texture} events={eventsWithImages} client:visible />
@@ -64,17 +70,29 @@ const tape = await getImage({
  .whatson__title {
   font-size: var(--fs-3xl);
   line-height: 1; 
+  text-align: center;
+
  }
 
  .whatson__header {
   display: flex; 
-  gap: var(--space-3xs);
+  gap: var(--space-xs);
   flex-direction: column;
-  text-align: center;
   align-items: center;
  }
 
  .whatson__lede {
   max-width: 65ch; 
  }
+
+   .underline {
+    position: relative;
+  }
+
+  .line {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    bottom: -3%;
+  }
 </style> 

@@ -76,10 +76,10 @@
   style:--rotation={`${rotation}deg`}
   style:--tapeRotation={`${tapeRotation}deg`}
   style:--texture={`url("${texture.src}")`}>
-  <div aria-hidden class="event-card__tape">
+  <div aria-hidden="true" class="event-card__tape">
     <img src={tape.src} width={tape.width} height={tape.height} alt=""/>
   </div>
-  <div class="event-card--image">
+  <div class="event-card__image">
     <img alt={event.imageAlt} src={event.image.src} />
   </div>
   <div class="event-card__content">
@@ -156,7 +156,7 @@
     font-size: var(--fs-s);
   }
 
-  .event-card--image {
+  .event-card__image {
     aspect-ratio: 16 / 9; 
     overflow: hidden;
     border-radius: var(--card-radius);

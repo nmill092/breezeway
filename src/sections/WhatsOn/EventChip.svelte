@@ -33,7 +33,7 @@
   transition: background-color .2s ease, color .2s ease; 
   text-wrap: nowrap; 
 
-  &:hover, &.active {
+  &.active {
     color: var(--color-paper-text);
     background: var(--color-accent);
   }
