@@ -4,9 +4,11 @@ import SwooshLine from "components/SwooshLine.astro";
 ---
 
 <section class="how-it-works" id="how" data-section-how>
-  <div class="container">
     <div class="scroll-stage">
+
       <div class="inner">
+  <div class="container">
+
         <div class="content">
           <h2 class="lede" data-lede data-reveal>
             At Breezeway, you only pay<br />
@@ -24,17 +26,19 @@ import SwooshLine from "components/SwooshLine.astro";
 <style>
   .how-it-works {
     position: relative;
+    /* padding-block-start: calc(var(--header-h) + var(--nav-gap)); */
   }
 
   .scroll-stage {
     height: 100svh;
+    width: 100% 
   }
 
   .inner {
     height: 100%;
     width: 100%;
     display: grid;
-    place-items: center;
+    align-items: center;
   }
 
   .content {
@@ -75,6 +79,8 @@ import SwooshLine from "components/SwooshLine.astro";
 
     mm.add("(prefers-reduced-motion: no-preference)", () => {
         const lede = document.querySelector("[data-lede]");
+
+        const CARD_FINAL_ROTATION = 1.5; 
 
         gsap.set("[data-pricing-card]", {
           autoAlpha: 0,
@@ -120,7 +126,7 @@ import SwooshLine from "components/SwooshLine.astro";
             autoAlpha: 1,
             y: 0,
             ease: "power3.out",
-            rotate: 2.2,
+            rotate: CARD_FINAL_ROTATION,
           })
           .to("[data-benefits]", {
             autoAlpha: 1,
@@ -131,7 +137,8 @@ import SwooshLine from "components/SwooshLine.astro";
               autoAlpha: 1,
             },
             "<.2",
-          );
+          )
+          .to({}, { duration: 1 })
       });
     }, root);
   }

@@ -16,9 +16,9 @@ import { sections } from "./data";
 
 <style>
   .day-stepper {
-    --gap-size: var(--space-3xl);
     list-style: none;
     display: flex;
+    padding: 0; 
     justify-content: center;
     font-size: var(--fs-s);
     margin-block-start: var(--space-md);
@@ -37,7 +37,7 @@ import { sections } from "./data";
     &:not(:last-child)::after {
       content: "";
       position: absolute;
-      top: 49%;
+      top: 15%;
       left: 50%;
       height: 1px;
       width: 100%;
@@ -69,6 +69,7 @@ import { sections } from "./data";
 
     .active > & {
       background-color: var(--color-accent);
+      box-shadow: 0 0 0 7.5px var(--color-paper);
       z-index: 99;
 
       &::after {
@@ -80,9 +81,21 @@ import { sections } from "./data";
 
   .stepper-title {
     color: oklch(from var(--color-accent) l calc(c - 0.08) h);
-
+    text-wrap: nowrap; 
+    display: none; 
+    
     .active > & {
       color: var(--color-accent);
     }
+  }
+
+  @media (width >= 65rem) {
+  .stepper-step:not(:last-child)::after {
+      top: 50%; 
+    }
+
+  .stepper-title {
+    display: block; 
+  }
   }
 </style>

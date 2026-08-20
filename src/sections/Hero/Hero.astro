@@ -78,6 +78,7 @@ const tornTexture = await getImage({
   .hero {
     --torn-edge-height: 70px;
     container-type: inline-size;
+    padding-block-start: var(--space-s);
   }
 
   .hero-grid {
@@ -87,7 +88,7 @@ const tornTexture = await getImage({
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: var(--space-xl);
+    gap: var(--space-md);
     color: var(--color-ink);
     min-height: calc(
       100svh - (var(--header-h) + var(--nav-gap) + var(--torn-edge-height))

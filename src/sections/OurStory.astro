@@ -101,6 +101,7 @@ const tornTexture = await getImage({
     display: grid; 
     align-items: center;
     grid-template-rows: auto 1fr; 
+    overflow: clip; 
   }
 
   .story-content {
@@ -159,6 +160,7 @@ const tornTexture = await getImage({
       line-height: 1.2;
       letter-spacing: -0.2;
       text-align: center; 
+      text-wrap: nowrap;
 
       span {
         display: block;
