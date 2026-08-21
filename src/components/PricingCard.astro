@@ -89,16 +89,13 @@ const price = 5;
         </svg>
       </div>
       <div class="notes">
-        <div class="checkin">
-          Check in when you arrive. <br />
-          Check out when you leave.
-        </div>
         <div class="line">
           <Swoosh/>
         </div>
         <div class="discounts">
-          Day passes and student/senior discounts available.
+          Daily pricing, sliding scale, and student/senior discounts available.
         </div>
+        
       </div>
     </div>
   </div>
@@ -151,6 +148,7 @@ const price = 5;
   }
 
   .card-body {
+    --card-line-height: 27px; 
     flex-grow: 999;
     padding-inline: var(--space-s);
     padding-block: var(--space-md);
@@ -160,9 +158,9 @@ const price = 5;
     flex-direction: column;
     background: repeating-linear-gradient(
       transparent,
-      transparent 27px,
-      rgba(122, 158, 172, 0.32) 27px,
-      rgba(122, 158, 172, 0.32) 28px
+      transparent var(--card-line-height),
+      rgba(122, 158, 172, 0.32) var(--card-line-height),
+      rgba(122, 158, 172, 0.32) calc(var(--card-line-height) + 1px)
     );
 
     ul {
@@ -200,13 +198,8 @@ const price = 5;
 
     .line {
       width: 20%;
-      margin-block-end: .5rem;
-    }
-
-    .discounts {
-      font-size: 1rem;
-      color: #5a6653;
-      justify-self: end;
+      height: var(--card-line-height);
+      display: flex; 
     }
   }
 
@@ -263,7 +256,7 @@ const price = 5;
     }
 
     .notes {
-      text-align: center; 
+      text-align: left; 
 
       .line {
         margin: auto; 
