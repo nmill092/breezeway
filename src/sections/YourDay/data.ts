@@ -4,7 +4,7 @@ import day3 from 'assets/images/yourday-3.jpg'
 import day4 from 'assets/images/yourday-4.jpg'
 import day5 from 'assets/images/yourday-5.jpg'
 
-interface YourDaySection {
+export interface YourDaySection {
   hours: number, 
   minutes: number,
   displayTime: string, 
@@ -23,7 +23,7 @@ const sections: YourDaySection[] = [
     title: 'Check in',
     text: 'Check in. Find your favorite seat and grab your first cup of coffee.', 
     image: day1,
-    imageAlt: 'Much ado about nothing',
+    imageAlt: 'A man sits at a table in a cozy café setting while drinking coffee and using a laptop.',
     rotation: .2
   }, 
   {
@@ -33,7 +33,7 @@ const sections: YourDaySection[] = [
     title: 'Snack break',
     text: 'Head to the kitchen and take a well-deserved snack break after a couple of hours of focused work.', 
     image: day2,
-    imageAlt: 'Much ado about nothing',
+    imageAlt: 'Two people converse while sitting at a table with popcorn and orange juice on its surface.',
     rotation: -.2 
   }, 
   {
@@ -43,7 +43,7 @@ const sections: YourDaySection[] = [
     title: 'Lunch',
     text: 'Lunch on the roof deck. Enjoy our Center City views and catch up with some neighbors.', 
     image: day3,
-    imageAlt: 'Much ado about nothing',
+    imageAlt: 'A view of the Philadelphia skyline.',
     rotation: 0.4
   }, 
   {
@@ -53,7 +53,7 @@ const sections: YourDaySection[] = [
     title: 'Game time',
     text: 'Take a break for a quick game of chess with the regulars.', 
     image: day4,
-    imageAlt: 'Much ado about nothing',
+    imageAlt: 'A person sitting at a table looks intently at a chess board while their opponent makes a move.',
     rotation: -1.2
   }, 
   {
@@ -63,7 +63,7 @@ const sections: YourDaySection[] = [
     title: 'Check out',
     text: 'Check out at the front desk and head home for the evening.', 
     image: day5,
-    imageAlt: 'Much ado about nothing',
+    imageAlt: 'A man standing outside and wearing a backpack smiles and looks off in the distance.',
     rotation: 1.1
   }, 
 ]
