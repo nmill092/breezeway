@@ -1,167 +1,175 @@
 ---
 import Clock from "components/Clock.astro";
-import Polaroid from "components/Polaroid.astro";
-import SwooshLine from "components/SwooshLine.astro";
-import { sections } from "./data";
-import Stepper from "./Stepper.astro";
 import UnderlinedText from "components/UnderlinedText.astro";
+import { sections } from "./data";
+import Stepper2 from "./Stepper.astro";
+import Polaroid from "components/Polaroid.astro";
+import Swoosh from "components/Swoosh.astro";
 ---
 
-<section class="your-day" id="day" data-section-yourday>
-  <div class="container">
-    <div class="day-wrapper" data-day-wrapper>
-      <h2 class="day-heading">
-        <UnderlinedText>Your Day</UnderlinedText> at Breezeway
-      </h2>
-      <p class="subhead">
-        Scroll to find out what a day at Breezeway might look like.
-      </p>
-      <div class="day-feature">
-        <div class="clock">
-          <Clock />
-        </div>
-        <div class="content">
-          {
-            sections.map((section) => (
-              <div
-                class="day-step"
-                data-step
-                style={`--rotation: ${section.rotation}deg`}
-              >
-                <div class="step-meta">
-                  <div class="display-time">{section.displayTime}</div>
-                  <h3 class="step-title">{section.title}</h3>
-                </div>
-                <div class="step-text">{section.text}</div>
-                <div class="step-image">
-                  <Polaroid
-                    img={section.image}
-                    imgAlt={section.imageAlt}
-                    variant="landscape"
-                    width={800}
-                  />
-                </div>
-              </div>
-            ))
-          }
+<section class="yourday" id="yourday" data-yourday>
+  <div class="yourday__stage" data-yourday-stage>
+    <div class="container">
+      <div class="yourday__inner">
+        <h2 class="yourday__header">
+          <UnderlinedText>Your Day</UnderlinedText> at Breezeway
+        </h2>
+        <p class="yourday__lede">
+          Scroll to see what a day at Breezeway might look like.
+        </p>
+        <div class="yourday__content">
+          <div class="yourday__clock">
+            <Clock />
+          </div>
+          <div class="yourday__stepper">
+            <Stepper2 sections={sections} />
+          </div>
+          <ul class="yourday__sections">
+            {
+              sections.map((section) => (
+                <li
+                  class="yourday__section"
+                  data-yourday-section
+                  style={`--rotation: ${section.rotation}deg`}
+                >
+                  <div class="section__header">
+                    <div class="section__time">{section.displayTime}</div>
+                    <h3 class="section__title">{section.title}</h3>
+                  </div>
+                  <div class="section__text">{section.text}</div>
+                  <div class="section__image">
+                    <Polaroid
+                      img={section.image}
+                      imgAlt={section.imageAlt}
+                      variant="landscape"
+                      width={800}
+                    />
+                  </div>
+                </li>
+              ))
+            }
+          </ul>
         </div>
       </div>
-      <Stepper />
     </div>
   </div>
 </section>
+
 <style>
-  .your-day {
+  .yourday {
+    padding-block-start: calc(var(--nav-padding) + var(--space-md));
+  }
+
+  .yourday__inner {
+    min-height: var(--stage-height);
+    display: grid;
+    grid-template-rows:
+      auto
+      auto
+      minmax(0, 1fr);
+  }
+
+  .yourday__stage {
+    --stage-height: calc(100svh - var(--nav-padding) - var(--space-md));
+    min-height: var(--stage-height);
     position: relative;
-    padding-block-start: calc(var(--header-h) + var(--nav-gap));
-    display: grid;
-    place-items:center; 
   }
 
-  .day-wrapper {
-    min-height: calc(100svh - var(--header-h));
-    display: grid;
-    align-content: center;
-    container-type: inline-size;
-    gap: var(--space-s);
+  .yourday__header,
+  .yourday__lede {
+    text-align: center;
   }
 
-  .day-heading {
+  .yourday__header {
     font-size: var(--fs-3xl);
-    text-align: center;
-    line-height: 1.1;
-    letter-spacing: -4%;
-    text-wrap: nowrap;
   }
 
-  .subhead {
-    text-align: center;
-  }
-
-  .day-feature {
-    display: flex;
-    gap: var(--space-xl);
-    justify-content: center;
-  }
-
-  .content {
-    min-width: 0;
-    flex: 0 1 auto;
-    position: relative;
-    container-type: inline-size;
-    width: min(100%, 34rem);
-  }
-
-  .clock {
-    min-width: 0;
-    width: clamp(20rem, 33cqi, 52rem);
+  .yourday__clock {
+    padding: 1rem;
     display: none; 
   }
-  
-  .day-step:first-child {
-    position: relative; 
+
+  .yourday__content {
+    display: grid;
+    gap: var(--space-s);
+    margin-block-start: var(--space-md);
+    line-height: 1.1;
+    grid-template-columns: 2rem minmax(0, 1fr);
+    width: min(100%, 31rem);
+    justify-self: center;
   }
 
-  .day-step {
-    display: grid;
+  @media (width >= 56rem) {
+    .yourday__content {
+      grid-template-columns: minmax(16rem, 0.7fr) 13rem minmax(24rem, 1.25fr);
+      margin-inline: 0; 
+    width: 100%;
+
+    }
+
+    .yourday__clock {
+      display: grid;
+      color: var(--color-accent);
+      gap: var(--space-s); 
+
+    }
+  }
+
+  .yourday__sections {
+    position: relative;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+    min-width: 0; 
+  }
+
+  .yourday__section:first-child {
+    visibility: visible;
+  }
+
+  .yourday__section {
+    min-width: 0; 
     position: absolute;
     inset: 0;
-    gap: var(--space-xs);
-    place-items: center;
-    text-align: center; 
+    display: grid;
+    align-content: center;
+    gap: var(--space-s);
+    visibility: hidden;
   }
 
-  .display-time {
-    font-family: var(--font-typewriter);
-    letter-spacing: 15%;
+  .section__header {
+    display: grid;
+    gap: var(--space-3xs);
+  }
+
+  .section__time {
+    font-size: var(--fs-s);
+    text-transform: uppercase;
     color: var(--color-accent);
   }
 
-  .step-title {
+  .section__title {
     font-size: var(--fs-xl);
     line-height: 1;
   }
 
-  .step-image {
-    width: min(100%, 28rem);
-    transform: rotate(var(--rotation));
-  }
-
-  .step-meta {
-    display: grid;
-  }
-
-  .step-text {
+  .section__text {
     max-width: 40ch;
   }
 
-  @media (width >= 65rem) {
-
-    .day-step {
-      text-align: left; 
-      place-items: initial; 
-    }
-    .clock {
-      display: block; 
-    }
-
-      .day-feature {
-    margin-block-start: var(--space-xl); 
+  .section__image {
+    min-width: 0;
+    width: min(100%, 28rem);
+    transform: rotate(var(--rotation));
   }
-  }
-  
-  @media (width < 65rem) {
-  .step-image {
-    width: min(70%, 18rem);
-  }
-}
 </style>
 
 <script>
-  import { gsap, scoped } from "scripts/gsap";
+  import { gsap, scoped, ScrollTrigger } from "scripts/gsap";
   import { sections } from "./data";
 
-  const root = document.querySelector("[data-section-yourday]");
+  const root = document.querySelector("[data-yourday]");
 
   if (root) {
     scoped(() => {
@@ -182,7 +190,6 @@ import UnderlinedText from "components/UnderlinedText.astro";
       if (face) {
         const cx = face.cx.baseVal.value;
         const cy = face.cy.baseVal.value;
-        console.log({ cx, cy });
 
         gsap.set("[data-hour-hand], [data-minute-hand]", {
           svgOrigin: `${cx} ${cy}`,
@@ -198,7 +205,7 @@ import UnderlinedText from "components/UnderlinedText.astro";
         rotation: stepsWithAngles[0].minuteAngle,
       });
 
-      const steps = gsap.utils.toArray("[data-step]") as Element[];
+      const steps = gsap.utils.toArray("[data-yourday-section]") as Element[];
       gsap.set(steps.slice(1), { autoAlpha: 0 });
 
       const tl = gsap.timeline({
@@ -206,7 +213,7 @@ import UnderlinedText from "components/UnderlinedText.astro";
           trigger: root,
           start: "top top",
           end: "+=2500",
-          pin: "[data-day-wrapper]",
+          pin: "[data-yourday-stage]",
           scrub: 1,
         },
       });
@@ -215,12 +222,11 @@ import UnderlinedText from "components/UnderlinedText.astro";
       const stepFade = 0.4;
       const stepDuration = stepHold + stepFade;
 
-      const stepMarkers = document.querySelectorAll("[data-stepper]");
-
+      const stepperSteps = document.querySelectorAll("[data-step]");
       let activeStep = -1;
 
       const setActiveStep = (i: number) => {
-        stepMarkers.forEach((step) => {
+        stepperSteps.forEach((step) => {
           step.classList.toggle(
             "active",
             Number((step as HTMLElement).dataset.stepper) === i,
@@ -231,7 +237,7 @@ import UnderlinedText from "components/UnderlinedText.astro";
       const syncActiveStep = () => {
         const index = gsap.utils.clamp(
           0,
-          steps.length - 1,
+          sections.length - 1,
           Math.floor(tl.time() / (stepHold + stepFade)),
         );
 
@@ -247,18 +253,31 @@ import UnderlinedText from "components/UnderlinedText.astro";
       steps.forEach((step, i) => {
         const at = i * stepDuration;
 
-        tl.to(step, { autoAlpha: 1, duration: stepFade }, at)
-          .to(
-            steps[i - 1] ?? step,
-            { autoAlpha: i === 0 ? 1 : 0, duration: stepFade },
+        if (i > 0) {
+          tl.to(
+            steps[i - 1],
+            {
+              autoAlpha: 0,
+              duration: stepFade,
+            },
             at,
-          )
+          );
+        }
+
+        tl.to(
+          step,
+          {
+            autoAlpha: 1,
+            duration: stepFade,
+          },
+          at,
+        )
           .to(
             "[data-hour-hand]",
             {
               rotation: `${stepsWithAngles[i].hourAngle}_cw`,
               duration: stepFade,
-              ease: "sine.out"
+              ease: "sine.out",
             },
             at,
           )
@@ -271,9 +290,9 @@ import UnderlinedText from "components/UnderlinedText.astro";
             },
             at,
           );
-
-        tl.eventCallback("onUpdate", syncActiveStep);
       });
+
+      tl.eventCallback("onUpdate", syncActiveStep);
     }, root);
   }
 </script>
