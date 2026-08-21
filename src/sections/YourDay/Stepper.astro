@@ -41,7 +41,6 @@ const { sections }: Props = Astro.props;
     grid-template-columns: 1.3rem 1fr;
     gap: var(--space-xs);
     align-items: stretch;
-
     flex: 1 1 0;
   }
 
@@ -88,6 +87,7 @@ const { sections }: Props = Astro.props;
       background-color: var(--color-accent);
       box-shadow: 0 0 0 7.5px var(--color-paper);
       z-index: 99;
+      border: 1px solid var(--color-accent); 
 
       &::after {
         height: 200%;
@@ -95,7 +95,6 @@ const { sections }: Props = Astro.props;
       }
     }
   }
-  
 
   .stepper__text {
     display: none;
@@ -104,7 +103,13 @@ const { sections }: Props = Astro.props;
   }
 
   .stepper__time {
-    align-self: end; 
+    align-self: end;
+    transition: .2s ease color; 
+    
+    .active & {
+      font-weight: 800;
+      color: var(--color-accent);
+    }
   }
   .stepper__label {
     align-self: start; 
