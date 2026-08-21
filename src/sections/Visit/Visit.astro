@@ -1,0 +1,225 @@
+---
+import UnderlinedText from "components/UnderlinedText.astro";
+
+import exteriorImg from "assets/images/breezeway-exterior.jpg";
+import tape from "assets/images/embellishments/washi-1.png";
+import Polaroid from "components/Polaroid.astro";
+import { Image } from "astro:assets";
+---
+
+<section class="visit" id="visit">
+  <div class="container">
+    <div class="visit__inner">
+      <h2 class="visit__header">
+        <UnderlinedText>Visit</UnderlinedText> Breezeway
+      </h2>
+      <section class="visit__content">
+        <div class="visit__text">
+          <div class="text__location">
+            <p class="location__address">
+              We are located at 176 Point Breeze Ave.
+            </p>
+            <p>
+              Breezeway is located near stops for SEPTA routes 2, 7, and 64.
+              There is two-hour free parking on Point Breeze Avenue and
+              surrounding streets. Additionally, there is an Indego bike share
+              station located two blocks away at 22nd and Federal.
+            </p>
+          </div>
+          <div class="text__arrive">
+            <p class="arrive__heading">When you arrive</p>
+            <p>
+              Head to the front desk to get checked in. If it's your first time,
+              a member of our staff will be happy to give you a tour. Then make
+              yourself at home in one of our four multipurpose spaces. Before
+              you leave, stop by the front desk and we'll let you know how much
+              time you spent.
+            </p>
+          </div>
+        </div>
+        <div class="visit__image">
+          <div class="image__tape" aria-hidden="true">
+            <p class="tape__text">176 Point Breeze Ave.</p>
+            <Image src={tape} alt="" />
+          </div>
+          <Polaroid
+            variant="landscape"
+            img={exteriorImg}
+            imgAlt="Brick rowhouse storefront on a residential city street"
+            width={800}
+          />
+        </div>
+      </section>
+      <section class="visit__info">
+        <div class="info__hours info__section">
+          <h3 class="info__heading">Hours</h3>
+          <dl>
+            <div class="info__row">
+              <dt>Monday–Saturday</dt>
+              <dd class="info__value">
+                <time datetime="07:30">7:30AM</time>–<time datetime="20:30"
+                  >8:30PM</time
+                >
+              </dd>
+            </div>
+            <div class="info__row">
+              <dt>Sunday</dt>
+              <dd class="info__value">
+                <time datetime="09:00">9:00AM</time>–<time datetime="18:30"
+                  >6:30PM</time
+                >
+              </dd>
+            </div>
+          </dl>
+        </div>
+        <div class="info__accessibility info__section">
+          <h3 class="info__heading">Accessibility</h3>
+          <div class="info__row">
+            <span>Step-free, wheelchair-accessible entrance</span>
+          </div>
+          <div class="info__row">
+            <span>Accessible restrooms available</span>
+          </div>
+          <div class="info__row">
+            <span>Service animals welcome</span>
+          </div>
+        </div>
+        <div class="info__contact info__section">
+          <h3 class="info__heading">Get in Touch</h3>
+          <div class="info__row">
+            <span>Email</span>
+            <a class="info__value" href="mailto:hello@breezeway.fake">hello@breezeway.fake</a>
+          </div>
+          <div class="info__row">
+            <span>Phone</span>
+            <a class="info__value" href="tel:+12155550176">(215) 555-0176</a>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</section>
+
+<style>
+  .visit {
+    padding-block: var(--section-spacing);
+  }
+
+  .visit__inner {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-l);
+  }
+
+  .visit__header {
+    font-size: var(--fs-3xl);
+  }
+
+  .visit__content {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-xl);
+  }
+
+  .visit__info {
+    border-top: 1px solid var(--color-accent);
+    padding-block-start: var(--space-md);
+    grid-template-columns: 1fr;
+    gap: var(--space-xl);
+    display: grid;
+  }
+
+  .visit__text {
+    display: grid;
+    gap: var(--space-md);
+    order: 2;
+  }
+
+  .visit__image {
+    transform: rotate(1.5deg);
+    order: 1;
+    position: relative;
+    width: min(100%, 32rem);
+    justify-self: center;
+  }
+
+  .image__tape {
+    position: absolute;
+    z-index: 2;
+    width: 12rem;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -1.5rem);
+    rotate: -3deg;
+
+    img {
+      height: auto;
+    }
+  }
+
+  .tape__text {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-family: var(--font-brand);
+    font-size: var(--fs-s);
+    left: 50%;
+    text-wrap: nowrap;
+  }
+
+  .location__address {
+    font-family: var(--font-display);
+    font-size: var(--fs-lg);
+    color: var(--color-accent);
+    display: block;
+  }
+
+  .arrive__heading,
+  .info__heading {
+    font-family: var(--font-display);
+    font-size: var(--fs-lg);
+    color: var(--color-accent);
+  }
+
+  .info__section {
+    display: grid;
+    align-content: start;
+    gap: var(--space-2xs);
+    flex: 1 1 auto;
+  }
+
+  .info__row {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-md);
+  }
+
+  .info__value {
+    font-weight: 800;
+    color: var(--color-accent);
+  }
+
+  @media (width >= 65rem) {
+    .visit__content {
+      grid-template-columns: 1fr 0.9fr;
+    }
+
+    .visit__info {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .visit__text {
+      order: 1;
+    }
+
+    .visit__image {
+      order: 2;
+    }
+  }
+
+  @media (width >= 67rem) {
+    .visit__info {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>

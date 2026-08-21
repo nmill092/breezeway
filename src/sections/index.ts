@@ -4,5 +4,6 @@ import OurStory from "./OurStory.astro";
 import HowItWorks from "./HowItWorks.astro";
 import Hero from "./Hero/Hero.astro";
 import FAQ from "./FAQ/FAQ.astro";
+import Visit from "./Visit/Visit.astro";
 
-export { WhatsOn, YourDay, OurStory, HowItWorks, Hero, FAQ }
+export { WhatsOn, YourDay, OurStory, HowItWorks, Hero, FAQ, Visit }
