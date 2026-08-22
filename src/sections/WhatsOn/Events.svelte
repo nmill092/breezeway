@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { prefersReducedMotion } from 'svelte/motion';
+  import { prefersReducedMotion } from "svelte/motion";
   import { SvelteSet } from "svelte/reactivity";
   import { fade } from "svelte/transition";
 

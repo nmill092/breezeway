@@ -1,18 +1,18 @@
 ---
-import HeroStack from "./HeroStack.astro";
-import Polaroid from "components/Polaroid.astro";
+import { getImage } from "astro:assets";
 
-import heroBoardGameImg from "assets/images/hero-boardgames.jpg";
-import washi1 from "assets/images/embellishments/washi-1.png";
-import washi2 from "assets/images/embellishments/washi-2.png";
-
-import heroLaptop from "assets/images/hero-laptop.jpg";
 import HeroChess from "components/HeroChess.astro";
 import HeroHiFive from "components/HeroHiFive.astro";
+import Polaroid from "components/Polaroid.astro";
 
-import { getImage } from "astro:assets";
+import HeroStack from "./HeroStack.astro";
+
 import tornMaskSrc from "assets/images/embellishments/papermask2.png";
 import tornTextureSrc from "assets/images/embellishments/tornpapertexture.jpg";
+import washi1 from "assets/images/embellishments/washi-1.png";
+import washi2 from "assets/images/embellishments/washi-2.png";
+import heroBoardGameImg from "assets/images/hero-boardgames.jpg";
+import heroLaptop from "assets/images/hero-laptop.jpg";
 
 const tornMask = await getImage({
   src: tornMaskSrc,
@@ -202,8 +202,7 @@ const tornTexture = await getImage({
 </style>
 
 <script>
-  import { scoped } from "scripts/gsap";
-  import { gsap } from "scripts/gsap";
+  import { gsap, scoped } from "scripts/gsap";
   import { initParallax } from "scripts/parallax";
 
   const hero = document.querySelector('[data-section="hero"]');

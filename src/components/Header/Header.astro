@@ -211,8 +211,8 @@ const navItems: { hash: string, label: string }[] = [
 </style>
 
 <script>
+  import { gsap, reduced } from "scripts/gsap";
   import { initScrollSpy } from "scripts/scrollSpy";
-import { gsap, reduced } from "../../lib/scripts/gsap";
 
   const setupNav = () => {
     const header = document.querySelector(".header");

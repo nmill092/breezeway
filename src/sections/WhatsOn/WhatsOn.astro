@@ -1,12 +1,13 @@
 ---
 import { getImage } from "astro:assets";
-import Events from "./Events.svelte";
 
+import UnderlinedText from "components/UnderlinedText.astro";
+
+import Events from "./Events.svelte";
 import { events } from "./events";
 
-import paperTexture from 'assets/images/embellishments/notecardoverlay.jpeg';
-import tapeOverlay from 'assets/images/embellishments/washi-4.png';
-import UnderlinedText from "components/UnderlinedText.astro";
+import paperTexture from "assets/images/embellishments/notecardoverlay.jpeg";
+import tapeOverlay from "assets/images/embellishments/washi-4.png";
 
 
 const eventsWithImages = await Promise.all(events.map(async event => ({

@@ -1,15 +1,15 @@
 ---
-import { getImage } from "astro:assets";
-import tornMaskSrc from "assets/images/embellishments/papermask2.png";
-import tornTextureSrc from "assets/images/embellishments/tornpapertexture.jpg";
+import { getImage, Image } from "astro:assets";
+
+import Polaroid from "components/Polaroid.astro";
 import Swoosh from "components/Swoosh.astro";
 import SwooshLine from "components/SwooshLine.astro";
-import Polaroid from "components/Polaroid.astro";
 
-import storyImg from "assets/images/ourstory.jpg";
-import tape from "assets/images/embellishments/washi-3.png";
 import flowerOverlay from "assets/images/embellishments/flower.png";
-import { Image } from "astro:assets";
+import tornMaskSrc from "assets/images/embellishments/papermask2.png";
+import tornTextureSrc from "assets/images/embellishments/tornpapertexture.jpg";
+import tape from "assets/images/embellishments/washi-3.png";
+import storyImg from "assets/images/ourstory.jpg";
 
 const tornMask = await getImage({
   src: tornMaskSrc,
@@ -247,7 +247,7 @@ const tornTexture = await getImage({
 
 <script>
 import { initParallax } from "scripts/parallax";
-import { initReveal } from "../lib/scripts/reveal";
+import { initReveal } from "scripts/reveal";
 
 const root = document.querySelector('[data-section="story"]') as HTMLElement;
 

@@ -1,10 +1,11 @@
 ---
-import Swoosh from "./Swoosh.astro"
-import SwooshLine from "./SwooshLine.astro"
-import Asterisk from "./Asterisk.astro";
+import { getImage } from "astro:assets";
 
-import { getImage } from "astro:assets"; 
-import cardOverlay from 'assets/images/embellishments/notecardoverlay.jpeg'; 
+import Asterisk from "./Asterisk.astro";
+import Swoosh from "./Swoosh.astro";
+import SwooshLine from "./SwooshLine.astro";
+
+import cardOverlay from "assets/images/embellishments/notecardoverlay.jpeg";
 
 const overlay = await getImage({ 
   src: cardOverlay, 

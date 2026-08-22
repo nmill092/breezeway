@@ -1,11 +1,12 @@
 ---
-import 'styles/global.css';
+import "styles/global.css";
 
 import { Font } from "astro:assets";
-import { siteConfig } from "../lib/meta"; 
 
-import Header from 'components/Header/Header.astro';
-import Footer from 'components/Footer.astro';
+import Footer from "components/Footer.astro";
+import Header from "components/Header/Header.astro";
+
+import { siteConfig } from "../lib/meta";
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
