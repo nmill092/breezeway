@@ -53,11 +53,11 @@
   </div>
   <p class="sr-only" role="status">Showing {filteredEvents.length} of {events.length} events</p>
   <ul class="events__grid">
-    {#each filteredEvents as event (event.id)}
+    {#each filteredEvents as event, i (event.id)}
       <li 
         in:fade={{ duration: prefersReducedMotion.current ? 0 : 300 }}
         >
-        <EventCard {tape} {texture} {event} />
+        <EventCard {tape} {texture} {event} index={i} />
       </li>
     {/each}
   </ul>
@@ -96,6 +96,11 @@
   display: flex;
   gap: var(--space-2xs);
   overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.events__chips::-webkit-scrollbar {
+  display: none;
 }
 
   .events__grid {

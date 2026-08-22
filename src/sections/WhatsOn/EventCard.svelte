@@ -1,24 +1,26 @@
 <script lang="ts">
+  import { determRandom } from "../../lib/utils";
   import type { Event } from "./events";
 
   const {
     tape,
     texture,
     event,
+    index
   }: {
     tape: ImageMetadata;
     texture: ImageMetadata;
     event: Event;
+    index: number; 
   } = $props();
 
   const ROTATION_MIN = -1.2;
   const ROTATION_MAX = 1.2;
-  const rotation = Math.random() * (ROTATION_MAX - ROTATION_MIN) + ROTATION_MIN;
+  const rotation = determRandom(index, ROTATION_MIN, ROTATION_MAX);
 
   const TAPE_ROTATION_MIN = -2;
   const TAPE_ROTATION_MAX = 2;
-  const tapeRotation =
-    Math.random() * (TAPE_ROTATION_MAX - TAPE_ROTATION_MIN) + TAPE_ROTATION_MIN;
+  const tapeRotation = determRandom(index, TAPE_ROTATION_MIN, TAPE_ROTATION_MAX);
 
   const timeZone = "UTC";
 
