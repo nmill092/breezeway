@@ -1,6 +1,5 @@
 ---
 import Logo from "./Logo.astro";
-import NavToggle from "./NavToggle.astro";
 
 const navItems: { hash: string, label: string }[] = [
   {hash: '#story', label: 'Our Story'},
@@ -25,7 +24,6 @@ const navItems: { hash: string, label: string }[] = [
         type="button"
       >
         <span class="sr-only">Menu</span>
-        <NavToggle />
       </button>
       <nav class="header__nav" id="primary-nav">
         <ul 
@@ -69,6 +67,13 @@ const navItems: { hash: string, label: string }[] = [
     height: 25px;
     margin-inline-start: auto;
     transform: translateY(-0.5rem);
+    background: var(--color-ink);
+    mask-image: url("../../assets/images/nav-open.svg");
+    mask-repeat: no-repeat; 
+
+    &[data-open] {
+      mask-image: url("../../assets/images/nav-closed.svg");
+    }
   }
 
   .header__nav {
@@ -232,6 +237,7 @@ const navItems: { hash: string, label: string }[] = [
 
     const openMenu = () => {
       navToggle.setAttribute("aria-expanded", "true");
+      navToggle.setAttribute("data-open", "true");
       navMenu.setAttribute("data-open", "true");
 
       if (prefersReduced) return;
@@ -254,6 +260,7 @@ const navItems: { hash: string, label: string }[] = [
 
     const closeMenu = () => {
       navToggle.setAttribute("aria-expanded", "false");
+      navToggle.removeAttribute("data-open");
 
       if (prefersReduced) {
         navMenu.removeAttribute("data-open");
@@ -282,6 +289,7 @@ const navItems: { hash: string, label: string }[] = [
       gsap.set(menuItems, { clearProps: "transform,opacity" });
       navToggle.setAttribute("aria-expanded", "false");
       navMenu.removeAttribute("data-open");
+      navToggle.removeAttribute("data-open");
     };
 
     const handleNavToggleClick = () => {
