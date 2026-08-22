@@ -330,12 +330,17 @@ const navItems: { hash: string, label: string }[] = [
         !navToggle.contains(target)
       ) {
         closeMenu();
-        resetMenu();
-        navToggle.focus()
       }
     };
 
     document.addEventListener("pointerdown", handleClickOutside);
+
+    navMenu.addEventListener("click", (e) => {
+      const target = e.target as HTMLElement;
+      if (getMenuOpen() && target.closest("a")) {
+        closeMenu();
+      }
+    });
   };
 
   setupNav();
