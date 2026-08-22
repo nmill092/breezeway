@@ -8,7 +8,7 @@ interface Props {
 const { sections }: Props = Astro.props;
 ---
 
-<ol class="stepper">
+<ol class="stepper" aria-hidden="true">
   {
     sections.map((section, i) => (
       <li
@@ -128,4 +128,14 @@ const { sections }: Props = Astro.props;
     display: grid;
   }
 }
+
+ @media (prefers-reduced-motion: reduce) {
+    .stepper__time {
+    transition: none; 
+    }
+
+    .stepper__indicator::after {
+      transition: none; 
+    }
+ }
 </style>

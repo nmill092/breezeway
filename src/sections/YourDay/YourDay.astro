@@ -5,7 +5,7 @@ import Swoosh from "components/Swoosh.astro";
 import UnderlinedText from "components/UnderlinedText.astro";
 
 import { sections } from "./data";
-import Stepper2 from "./Stepper.astro";
+import Stepper from "./Stepper.astro";
 ---
 
 <section class="yourday" id="yourday" data-section="yourday">
@@ -23,7 +23,7 @@ import Stepper2 from "./Stepper.astro";
             <Clock />
           </div>
           <div class="yourday__stepper">
-            <Stepper2 sections={sections} />
+            <Stepper sections={sections} />
           </div>
           <ul class="yourday__sections">
             {
@@ -34,7 +34,9 @@ import Stepper2 from "./Stepper.astro";
                   style={`--rotation: ${section.rotation}deg`}
                 >
                   <div class="yourday__section-header">
-                    <div class="yourday__section-time">{section.displayTime}</div>
+                    <div class="yourday__section-time">
+                      {section.displayTime}
+                    </div>
                     <h3 class="yourday__section-title">{section.title}</h3>
                   </div>
                   <div class="yourday__section-text">{section.text}</div>
@@ -87,7 +89,7 @@ import Stepper2 from "./Stepper.astro";
 
   .yourday__clock {
     padding: 1rem;
-    display: none; 
+    display: none;
   }
 
   .yourday__content {
@@ -103,16 +105,14 @@ import Stepper2 from "./Stepper.astro";
   @media (width >= 56rem) {
     .yourday__content {
       grid-template-columns: minmax(16rem, 0.7fr) 13rem minmax(24rem, 1.25fr);
-      margin-inline: 0; 
-    width: 100%;
-
+      margin-inline: 0;
+      width: 100%;
     }
 
     .yourday__clock {
       display: grid;
       color: var(--color-accent);
-      gap: var(--space-s); 
-
+      gap: var(--space-s);
     }
   }
 
@@ -122,7 +122,7 @@ import Stepper2 from "./Stepper.astro";
     margin: 0;
     padding: 0;
     min-height: 100%;
-    min-width: 0; 
+    min-width: 0;
   }
 
   .yourday__section:first-child {
@@ -130,7 +130,7 @@ import Stepper2 from "./Stepper.astro";
   }
 
   .yourday__section {
-    min-width: 0; 
+    min-width: 0;
     position: absolute;
     inset: 0;
     display: grid;
@@ -164,6 +164,25 @@ import Stepper2 from "./Stepper.astro";
     width: min(100%, 28rem);
     transform: rotate(var(--rotation));
   }
+
+  @media (prefers-reduced-motion: reduce) {
+  .yourday__clock,
+  .yourday__stepper {
+    align-self: start;
+    position: sticky;
+    top: 30%;
+  }
+
+  .yourday__sections {
+    display: grid;
+    gap: var(--space-md);
+  }
+
+  .yourday__section {
+    position: relative;
+    visibility: visible;
+  }
+}
 </style>
 
 <script>
@@ -207,21 +226,6 @@ import Stepper2 from "./Stepper.astro";
       });
 
       const steps = gsap.utils.toArray("[data-yourday-section]") as Element[];
-      gsap.set(steps.slice(1), { autoAlpha: 0 });
-
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: root,
-          start: "top top",
-          end: "+=2500",
-          pin: "[data-yourday-stage]",
-          scrub: 1,
-        },
-      });
-
-      const stepHold = 1.4;
-      const stepFade = 0.4;
-      const stepDuration = stepHold + stepFade;
 
       const stepperSteps = document.querySelectorAll("[data-step]");
       let activeStep = -1;
@@ -235,65 +239,112 @@ import Stepper2 from "./Stepper.astro";
         });
       };
 
-      const syncActiveStep = () => {
-        const index = gsap.utils.clamp(
-          0,
-          sections.length - 1,
-          Math.floor(tl.time() / (stepHold + stepFade)),
-        );
+      let mm = gsap.matchMedia();
 
-        if (index !== activeStep) {
-          activeStep = index;
-          setActiveStep(index);
-        }
-      };
+      mm.add("(prefers-reduced-motion: no-preference)", () => {
+        gsap.set(steps.slice(1), { autoAlpha: 0 });
 
-      setActiveStep(0);
-      activeStep = 0;
-
-      steps.forEach((step, i) => {
-        const at = i * stepDuration;
-
-        if (i > 0) {
-          tl.to(
-            steps[i - 1],
-            {
-              autoAlpha: 0,
-              duration: stepFade,
-            },
-            at,
-          );
-        }
-
-        tl.to(
-          step,
-          {
-            autoAlpha: 1,
-            duration: stepFade,
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: root,
+            start: "top top",
+            end: "+=2500",
+            pin: "[data-yourday-stage]",
+            scrub: 1,
           },
-          at,
-        )
-          .to(
-            "[data-hour-hand]",
+        });
+
+        const stepHold = 1.4;
+        const stepFade = 0.4;
+        const stepDuration = stepHold + stepFade;
+
+        const syncActiveStep = () => {
+          const index = gsap.utils.clamp(
+            0,
+            sections.length - 1,
+            Math.floor(tl.time() / (stepHold + stepFade)),
+          );
+
+          if (index !== activeStep) {
+            activeStep = index;
+            setActiveStep(index);
+          }
+        };
+
+        setActiveStep(0);
+        activeStep = 0;
+
+        steps.forEach((step, i) => {
+          const at = i * stepDuration;
+
+          if (i > 0) {
+            tl.to(
+              steps[i - 1],
+              {
+                autoAlpha: 0,
+                duration: stepFade,
+              },
+              at,
+            );
+          }
+
+          tl.to(
+            step,
             {
-              rotation: `${stepsWithAngles[i].hourAngle}_cw`,
+              autoAlpha: 1,
               duration: stepFade,
-              ease: "sine.out",
             },
             at,
           )
-          .to(
-            "[data-minute-hand]",
-            {
-              rotation: `${stepsWithAngles[i].minuteAngle}_cw`,
-              duration: stepFade,
-              ease: "power3.out",
-            },
-            at,
-          );
+            .to(
+              "[data-hour-hand]",
+              {
+                rotation: `${stepsWithAngles[i].hourAngle}_cw`,
+                duration: stepFade,
+                ease: "sine.out",
+              },
+              at,
+            )
+            .to(
+              "[data-minute-hand]",
+              {
+                rotation: `${stepsWithAngles[i].minuteAngle}_cw`,
+                duration: stepFade,
+                ease: "power3.out",
+              },
+              at,
+            );
+        });
+
+        tl.eventCallback("onUpdate", syncActiveStep);
       });
 
-      tl.eventCallback("onUpdate", syncActiveStep);
+      mm.add("(prefers-reduced-motion: reduce)", () => {
+        const syncStep = (i: number) => {
+          setActiveStep(i);
+          gsap.set("[data-hour-hand]", {
+            rotation: `${stepsWithAngles[i].hourAngle}_cw`,
+          });
+
+          gsap.set("[data-minute-hand]", {
+            rotation: `${stepsWithAngles[i].minuteAngle}_cw`,
+          });
+        };
+
+        steps.forEach((step, i) => {
+          ScrollTrigger.create({
+            trigger: step,
+            start: "top 20%",
+            end: "bottom 20%",
+            onEnter: () => {
+              syncStep(i);
+            },
+            onEnterBack: () => {
+              syncStep(i);
+            },
+          });
+        });
+      });
     }, root);
   }
 </script>
