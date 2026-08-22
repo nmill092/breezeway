@@ -1,8 +1,10 @@
 import gsap from 'gsap'; 
 import ScrollTrigger from 'gsap/ScrollTrigger'; 
 
-gsap.registerPlugin(ScrollTrigger); 
+gsap.registerPlugin(ScrollTrigger);
 ScrollTrigger.config({ ignoreMobileResize: true });
+
+document.fonts.ready.then(() => ScrollTrigger.refresh());
 
 const reduced = () => 
   window.matchMedia('(prefers-reduced-motion: reduce)').matches; 
