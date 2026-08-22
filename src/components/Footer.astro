@@ -37,19 +37,19 @@ const footerLinks: { hash: string, label: string }[] = [
       <div class="footer__row">
         <ul class="footer__social">
           <li class="footer__social-icon">
-            <a aria-label="Breezeway on Instagram">
+            <span aria-hidden="true">
             <Instagram/>
-            </a>
+            </span>
           </li>
           <li class="footer__social-icon">
-            <a aria-label="Breezeway on Facebook">
+            <span aria-hidden="true">
             <Facebook/>
-            </a>
+            </span>
           </li>
           <li class="footer__social-icon">
-            <a aria-label="Breezeway on BlueSky">
+            <span aria-hidden="true">
             <Bluesky/>
-            </a>
+            </span>
           </li>
         </ul>
         <p class="footer__disclaimer">
@@ -141,14 +141,12 @@ const footerLinks: { hash: string, label: string }[] = [
   .footer__social-icon a {
     display: grid;
     place-items: center;
-
     inline-size: 2.5rem;
     block-size: 2.5rem;
-
     svg {
-    inline-size: 1.2rem;
-    block-size: 1.2rem;
-  }
+      inline-size: 1.2rem;
+      block-size: 1.2rem;
+    }
   }
 
   .footer__back-btn {
