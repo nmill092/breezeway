@@ -10,11 +10,11 @@ import { Image } from "astro:assets";
 <section class="visit" id="visit">
   <div class="container">
     <div class="visit__inner">
-      <h2 class="visit__header">
+      <h2 data-reveal class="visit__header">
         <UnderlinedText>Visit</UnderlinedText> Breezeway
       </h2>
       <section class="visit__content">
-        <div class="visit__text">
+        <div data-reveal class="visit__text">
           <div class="text__location">
             <p class="location__address">
               We are located at 176 Point Breeze Ave.
@@ -31,13 +31,11 @@ import { Image } from "astro:assets";
             <p>
               Head to the front desk to get checked in. If it's your first time,
               a member of our staff will be happy to give you a tour. Then make
-              yourself at home in one of our four multipurpose spaces. Before
-              you leave, stop by the front desk and we'll let you know how much
-              time you spent.
+              yourself at home in one of our four multipurpose spaces located across three floors. Before you leave, stop by the front desk to check out. 
             </p>
           </div>
         </div>
-        <div class="visit__image">
+        <div data-reveal class="visit__image">
           <div class="image__tape" aria-hidden="true">
             <p class="tape__text">176 Point Breeze Ave.</p>
             <Image src={tape} alt="" />
@@ -223,3 +221,12 @@ import { Image } from "astro:assets";
     }
   }
 </style>
+
+<script>
+import { initReveal } from "scripts/reveal";
+
+  const root = document.querySelector<HTMLElement>('#visit'); 
+  if (root) {
+    initReveal(root); 
+  }
+</script>

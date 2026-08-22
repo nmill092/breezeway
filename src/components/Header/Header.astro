@@ -125,9 +125,10 @@ const navItems: { hash: string, label: string }[] = [
     padding-inline: var(--space-md);
     padding-block: var(--space-3xs);
     text-wrap: nowrap;
-    border: 1px solid; 
+    border: 1px solid;
+    transition: .3s ease background-color, .3s ease color;  
 
-    &.header__link--active {
+    &:hover, &.header__link--active {
       color: var(--color-paper-text);
       background-color: var(--color-accent);
     }
@@ -176,6 +177,7 @@ const navItems: { hash: string, label: string }[] = [
 
     .header__link--active {
       position: relative; 
+      color: var(--color-accent);
     }
 
     .header__link--active:not(.header__cta)::after {

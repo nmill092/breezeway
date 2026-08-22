@@ -6,7 +6,7 @@ interface FAQ {
 export const questions: FAQ[] = [
   { 
     question: "Wait, so you pay for time?",
-    answer: "Yes! Unlike a traditional coffee shop where you pay for each item you order, you pay by the hour at Breezeway. You're free to stay as long as you like and enjoy unlimited coffee and tea, light snacks, and a selection of board/console games."
+    answer: "Yes! Unlike a traditional coffee shop where you pay for each item you order, you pay by the hour at Breezeway. You're free to stay as long as you like and enjoy unlimited coffee and tea, light snacks, and a selection of board/console games. There is a maximum daily price of $25."
   },
   {
     question: "Why not just go to a coffee shop?",
@@ -26,6 +26,6 @@ export const questions: FAQ[] = [
   },
   { 
     question: "Where does the money go?",
-    answer: "Mostly right back into Breezeway: paying our staff, keeping the space comfortable, and supporting the events and community groups that use it. Part of what you pay helps make room for people and organizations who couldn't always afford a space of their own."
+    answer: "Mostly right back into Breezeway: paying our staff, keeping the space comfortable, and supporting the events and community groups that use it. Part of what you pay helps us offer sliding-scale and discounted rates for members of our community."
   },
 ] 
