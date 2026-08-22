@@ -11,7 +11,11 @@ const { sections }: Props = Astro.props;
 <ol class="stepper">
   {
     sections.map((section, i) => (
-      <li data-stepper={i} class:list={["stepper__step", { active: i === 0 }]} data-step>
+      <li
+        data-stepper={i}
+        class:list={["stepper__step", { "stepper__step--active": i === 0 }]}
+        data-step
+      >
         <div class="stepper__marker">
           <div class="stepper__indicator" />
         </div>
@@ -83,7 +87,7 @@ const { sections }: Props = Astro.props;
       transition: 0.3s ease all;
     }
 
-    .active & {
+    .stepper__step--active & {
       background-color: var(--color-accent);
       box-shadow: 0 0 0 7.5px var(--color-paper);
       z-index: 99;
@@ -106,7 +110,7 @@ const { sections }: Props = Astro.props;
     align-self: end;
     transition: .2s ease color; 
     
-    .active & {
+    .stepper__step--active & {
       font-weight: 800;
       color: var(--color-accent);
     }

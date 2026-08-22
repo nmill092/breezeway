@@ -3,17 +3,17 @@ import PricingCard from "components/PricingCard.astro";
 import SwooshLine from "components/SwooshLine.astro";
 ---
 
-<section class="how-it-works" id="how" data-section-how>
-    <div class="scroll-stage">
+<section class="how" id="how" data-section="how">
+    <div class="how__stage">
 
-      <div class="inner">
+      <div class="how__inner">
   <div class="container">
 
-        <div class="content">
-          <h2 class="lede" data-lede data-reveal>
+        <div class="how__content">
+          <h2 class="how__lede" data-lede data-reveal>
             At Breezeway, you only pay<br />
-            for the <span class="underline"
-              >time <div class="line" data-line><SwooshLine /></div></span
+            for the <span class="how__underline"
+              >time <div class="how__line" data-line><SwooshLine /></div></span
             > you spend.
           </h2>
           <PricingCard />
@@ -24,42 +24,42 @@ import SwooshLine from "components/SwooshLine.astro";
 </section>
 
 <style>
-  .how-it-works {
+  .how {
     position: relative;
     /* padding-block-start: calc(var(--header-h) + var(--nav-gap)); */
   }
 
-  .scroll-stage {
+  .how__stage {
     height: 100svh;
-    width: 100% 
+    width: 100%
   }
 
-  .inner {
+  .how__inner {
     height: 100%;
     width: 100%;
     display: grid;
     align-items: center;
   }
 
-  .content {
+  .how__content {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: var(--fs-4xl);
   }
 
-  .lede {
+  .how__lede {
     font-size: var(--fs-3xl);
     line-height: 1;
     text-align: center;
-    letter-spacing: -4%; 
+    letter-spacing: -4%;
   }
 
-  .underline {
+  .how__underline {
     position: relative;
   }
 
-  .line {
+  .how__line {
     position: absolute;
     width: 80%;
     left: 0;
@@ -71,7 +71,7 @@ import SwooshLine from "components/SwooshLine.astro";
 <script>
   import { gsap, scoped } from "scripts/gsap";
 
-  const root = document.querySelector("[data-section-how]");
+  const root = document.querySelector('[data-section="how"]');
 
   if (root) {
     const { ctx } = scoped(() => {
@@ -102,7 +102,7 @@ import SwooshLine from "components/SwooshLine.astro";
             trigger: root,
             start: "top top",
             end: "+=1000",
-            pin: ".scroll-stage",
+            pin: ".how__stage",
             scrub: 1,
           },
           defaults: {

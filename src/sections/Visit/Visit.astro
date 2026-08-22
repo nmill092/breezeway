@@ -7,7 +7,7 @@ import Polaroid from "components/Polaroid.astro";
 import { Image } from "astro:assets";
 ---
 
-<section class="visit" id="visit">
+<section class="visit" id="visit" data-section="visit">
   <div class="container">
     <div class="visit__inner">
       <h2 data-reveal class="visit__header">
@@ -15,8 +15,8 @@ import { Image } from "astro:assets";
       </h2>
       <section class="visit__content">
         <div data-reveal class="visit__text">
-          <div class="text__location">
-            <p class="location__address">
+          <div class="visit__location">
+            <p class="visit__address">
               We are located at 176 Point Breeze Ave.
             </p>
             <p>
@@ -26,8 +26,8 @@ import { Image } from "astro:assets";
               station located two blocks away at 22nd and Federal.
             </p>
           </div>
-          <div class="text__arrive">
-            <p class="arrive__heading">When you arrive</p>
+          <div class="visit__arrive">
+            <p class="visit__subheading">When you arrive</p>
             <p>
               Head to the front desk to get checked in. If it's your first time,
               a member of our staff will be happy to give you a tour. Then make
@@ -36,8 +36,8 @@ import { Image } from "astro:assets";
           </div>
         </div>
         <div data-reveal class="visit__image">
-          <div class="image__tape" aria-hidden="true">
-            <p class="tape__text">176 Point Breeze Ave.</p>
+          <div class="visit__tape" aria-hidden="true">
+            <p class="visit__tape-text">176 Point Breeze Ave.</p>
             <Image src={tape} alt="" />
           </div>
           <Polaroid
@@ -49,20 +49,20 @@ import { Image } from "astro:assets";
         </div>
       </section>
       <section class="visit__info">
-        <div class="info__hours info__section">
-          <h3 class="info__heading">Hours</h3>
+        <div class="visit__info-group visit__info-group--hours">
+          <h3 class="visit__info-heading">Hours</h3>
           <dl>
-            <div class="info__row">
+            <div class="visit__info-row">
               <dt>Monday–Saturday</dt>
-              <dd class="info__value">
+              <dd class="visit__info-value">
                 <time datetime="07:30">7:30AM</time>–<time datetime="20:30"
                   >8:30PM</time
                 >
               </dd>
             </div>
-            <div class="info__row">
+            <div class="visit__info-row">
               <dt>Sunday</dt>
-              <dd class="info__value">
+              <dd class="visit__info-value">
                 <time datetime="09:00">9:00AM</time>–<time datetime="18:30"
                   >6:30PM</time
                 >
@@ -70,27 +70,27 @@ import { Image } from "astro:assets";
             </div>
           </dl>
         </div>
-        <div class="info__accessibility info__section">
-          <h3 class="info__heading">Accessibility</h3>
-          <div class="info__row">
+        <div class="visit__info-group visit__info-group--accessibility">
+          <h3 class="visit__info-heading">Accessibility</h3>
+          <div class="visit__info-row">
             <span>Step-free, wheelchair-accessible entrance</span>
           </div>
-          <div class="info__row">
+          <div class="visit__info-row">
             <span>Accessible restrooms available</span>
           </div>
-          <div class="info__row">
+          <div class="visit__info-row">
             <span>Service animals welcome</span>
           </div>
         </div>
-        <div class="info__contact info__section">
-          <h3 class="info__heading">Get in Touch</h3>
-          <div class="info__row">
+        <div class="visit__info-group visit__info-group--contact">
+          <h3 class="visit__info-heading">Get in Touch</h3>
+          <div class="visit__info-row">
             <span>Email</span>
-            <a class="info__value" href="mailto:hello@breezeway.fake">hello@breezeway.fake</a>
+            <a class="visit__info-value" href="mailto:hello@breezeway.fake">hello@breezeway.fake</a>
           </div>
-          <div class="info__row">
+          <div class="visit__info-row">
             <span>Phone</span>
-            <a class="info__value" href="tel:+12155550176">(215) 555-0176</a>
+            <a class="visit__info-value" href="tel:+12155550176">(215) 555-0176</a>
           </div>
         </div>
       </section>
@@ -141,7 +141,7 @@ import { Image } from "astro:assets";
     justify-self: center;
   }
 
-  .image__tape {
+  .visit__tape {
     position: absolute;
     z-index: 2;
     width: 12rem;
@@ -155,7 +155,7 @@ import { Image } from "astro:assets";
     }
   }
 
-  .tape__text {
+  .visit__tape-text {
     position: absolute;
     top: 50%;
     transform: translate(-50%, -50%);
@@ -165,34 +165,34 @@ import { Image } from "astro:assets";
     text-wrap: nowrap;
   }
 
-  .location__address {
+  .visit__address {
     font-family: var(--font-display);
     font-size: var(--fs-lg);
     color: var(--color-accent);
     display: block;
   }
 
-  .arrive__heading,
-  .info__heading {
+  .visit__subheading,
+  .visit__info-heading {
     font-family: var(--font-display);
     font-size: var(--fs-lg);
     color: var(--color-accent);
   }
 
-  .info__section {
+  .visit__info-group {
     display: grid;
     align-content: start;
     gap: var(--space-2xs);
     flex: 1 1 auto;
   }
 
-  .info__row {
+  .visit__info-row {
     display: flex;
     justify-content: space-between;
     gap: var(--space-md);
   }
 
-  .info__value {
+  .visit__info-value {
     font-weight: 800;
     color: var(--color-accent);
   }
@@ -225,7 +225,7 @@ import { Image } from "astro:assets";
 <script>
 import { initReveal } from "scripts/reveal";
 
-  const root = document.querySelector<HTMLElement>('#visit'); 
+  const root = document.querySelector<HTMLElement>('[data-section="visit"]');
   if (root) {
     initReveal(root); 
   }

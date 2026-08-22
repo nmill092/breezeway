@@ -28,10 +28,10 @@ const tornTexture = await getImage({
 });
 ---
 
-<section class="hero" data-hero>
+<section class="hero" id="hero" data-section="hero">
   <div class="container--full-bleed">
-    <div class="hero-grid">
-      <div data-hero-image data-parallax class="hero-photo br">
+    <div class="hero__grid">
+      <div data-hero-image data-parallax class="hero__photo hero__photo--br">
         <Polaroid
           img={heroBoardGameImg}
           tapeImg={washi1}
@@ -44,7 +44,7 @@ const tornTexture = await getImage({
         />
       </div>
 
-      <div data-hero-image data-parallax-speed="10" class="hero-photo tl">
+      <div data-hero-image data-parallax-speed="10" class="hero__photo hero__photo--tl">
         <Polaroid
           img={heroLaptop}
           tapeImg={washi2}
@@ -58,10 +58,15 @@ const tornTexture = await getImage({
         />
       </div>
       <HeroStack />
-      <div data-hero-image class="hero-illustration tr">
+      <div data-hero-image class="hero__illustration hero__illustration--tr">
         <HeroChess />
       </div>
-      <div data-hero-image class="hero-illustration bl" data-parallax data-parallax-speed="8">
+      <div
+        data-hero-image
+        class="hero__illustration hero__illustration--bl"
+        data-parallax
+        data-parallax-speed="8"
+      >
         <HeroHiFive />
       </div>
     </div>
@@ -81,7 +86,7 @@ const tornTexture = await getImage({
     padding-block-start: var(--space-s);
   }
 
-  .hero-grid {
+  .hero__grid {
     position: relative;
     display: flex;
     z-index: 1;
@@ -111,8 +116,8 @@ const tornTexture = await getImage({
     background-blend-mode: multiply;
   }
 
-  .hero-photo,
-  .hero-illustration {
+  .hero__photo,
+  .hero__illustration {
     --nudgeX: 0;
     --nudgeY: 0;
     --rotate: 0;
@@ -120,25 +125,21 @@ const tornTexture = await getImage({
     transform: translate(var(--nudgeX), var(--nudgeY)) rotate(var(--rotate));
   }
 
-  .hero-text {
-    order: 1;
-  }
-
-  .tl {
+  .hero__photo--tl {
     --rotate: -2.2deg;
     order: 2;
     margin-block-start: 2rem;
     width: clamp(14rem, 75cqi, 22rem);
   }
 
-  .br,
-  .bl,
-  .tr {
+  .hero__photo--br,
+  .hero__illustration--bl,
+  .hero__illustration--tr {
     display: none;
   }
 
   @container (width >= 65rem) {
-    .hero-grid {
+    .hero__grid {
       display: grid;
       grid-template:
         "photo1 text illustration2"
@@ -151,8 +152,8 @@ const tornTexture = await getImage({
         minmax(15rem, 1fr);
     }
 
-    .hero-photo,
-    .hero-illustration {
+    .hero__photo,
+    .hero__illustration {
       place-self: center;
       transition: 0.3s scale ease;
 
@@ -162,31 +163,34 @@ const tornTexture = await getImage({
       }
     }
 
-    .hero-illustration {
+    .hero__illustration {
       width: clamp(11rem, 16cqi, 19rem);
     }
 
-    .tl {
+    .hero__photo--tl {
       grid-area: photo1;
       width: clamp(15rem, 16cqi, 20rem);
       order: initial;
       margin-block-start: initial;
     }
-    .br {
+
+    .hero__photo--br {
       grid-area: photo2;
       width: clamp(15rem, 22cqi, 25rem);
       display: block;
       --rotate: 2.2deg;
       --nudgeY: calc(var(--torn-edge-height) * 0.6);
     }
-    .bl {
+
+    .hero__illustration--bl {
       grid-area: illustration1;
       --nudgeX: 80px;
       --nudgeY: 20px;
       --rotate: -2.8deg;
       display: block;
     }
-    .tr {
+
+    .hero__illustration--tr {
       grid-area: illustration2;
       --nudgeX: -47px;
       --nudgeY: -20px;
@@ -202,7 +206,7 @@ const tornTexture = await getImage({
   import { gsap } from "scripts/gsap";
   import { initParallax } from "scripts/parallax";
 
-  const hero = document.querySelector("[data-hero]");
+  const hero = document.querySelector('[data-section="hero"]');
 
   if (hero) {
     const { ctx } = scoped(() => {

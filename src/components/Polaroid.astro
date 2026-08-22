@@ -28,14 +28,14 @@ const {
 
 ---
 
-<div class="polaroid-frame shadow-low" style={
+<div class="polaroid shadow-low" style={
   `--aspect: ${variant === 'square' ? '1 / 1' :  
     variant === 'portrait' ? '3 / 4' : 
     variant === 'landscape' ? '13 / 9' : ''};
   --padding: ${paddingVariant === 'md' ? '.4rem' : '.8rem'}`}>
-  <div class="polaroid-media">
-    <Image 
-      class="polaroid-img"
+  <div class="polaroid__media">
+    <Image
+      class="polaroid__img"
       fit="cover" 
       priority={priority}
       src={img} 
@@ -47,10 +47,10 @@ const {
    {tapeImg && (
     <div 
       aria-hidden="true" 
-      class="polaroid-tape" 
+      class="polaroid__tape"
       style={`rotate: ${tapeRotation}`}>
-        <Image 
-          class="tape-img"
+        <Image
+          class="polaroid__tape-img"
           fit="cover" 
           priority={priority}
           src={tapeImg} 
@@ -63,35 +63,35 @@ const {
 </div>
 
 <style>
-  .polaroid-frame {
-    background-color: var(--color-polaroid); 
-    position: relative; 
-    width: 100%; 
+  .polaroid {
+    background-color: var(--color-polaroid);
+    position: relative;
+    width: 100%;
     padding: var(--padding);
     aspect-ratio: var(--aspect);
   }
 
-  .polaroid-media {
+  .polaroid__media {
     aspect-ratio: var(--aspect);
 
-    .polaroid-img {
+    .polaroid__img {
       object-fit: cover;
-      width: 100%; 
-      height: 100%; 
+      width: 100%;
+      height: 100%;
     }
   }
 
-  .polaroid-tape {
-    position: absolute; 
-    width: 40%; 
-    height: auto; 
-    top: -5%; 
-    left: 50%; 
+  .polaroid__tape {
+    position: absolute;
+    width: 40%;
+    height: auto;
+    top: -5%;
+    left: 50%;
     transform: translateX(-50%);
 
-    .tape-img {
-      width: 100%; 
-      height: 100%; 
+    .polaroid__tape-img {
+      width: 100%;
+      height: 100%;
     }
   }
 </style>

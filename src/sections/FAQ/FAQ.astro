@@ -2,9 +2,9 @@
 import { questions } from "./data";
 ---
 
-<section class="faq" id="faq" data-faq>
+<section class="faq" id="faq" data-section="faq">
   <div class="container">
-    <div class="faq-inner">
+    <div class="faq__inner">
       <h2 class="faq__heading">Frequently Asked Questions</h2>
       <div class="faq__questions">
         {
@@ -30,7 +30,7 @@ import { questions } from "./data";
     padding-block-start: var(--section-spacing);
   }
 
-  .faq-inner {
+  .faq__inner {
     display: grid;
     gap: var(--space-l);
   }
@@ -109,7 +109,7 @@ import { questions } from "./data";
 <script>
   import { gsap, reduced, scoped } from "scripts/gsap";
 
-  const root = document.querySelector("[data-faq]") as Element;
+  const root = document.querySelector('[data-section="faq"]') as Element;
 
   scoped(() => {
   if (!root) return; 

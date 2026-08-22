@@ -7,7 +7,7 @@ import Polaroid from "components/Polaroid.astro";
 import Swoosh from "components/Swoosh.astro";
 ---
 
-<section class="yourday" id="yourday" data-yourday>
+<section class="yourday" id="yourday" data-section="yourday">
   <div class="yourday__stage" data-yourday-stage>
     <div class="container">
       <div class="yourday__inner">
@@ -32,12 +32,12 @@ import Swoosh from "components/Swoosh.astro";
                   data-yourday-section
                   style={`--rotation: ${section.rotation}deg`}
                 >
-                  <div class="section__header">
-                    <div class="section__time">{section.displayTime}</div>
-                    <h3 class="section__title">{section.title}</h3>
+                  <div class="yourday__section-header">
+                    <div class="yourday__section-time">{section.displayTime}</div>
+                    <h3 class="yourday__section-title">{section.title}</h3>
                   </div>
-                  <div class="section__text">{section.text}</div>
-                  <div class="section__image">
+                  <div class="yourday__section-text">{section.text}</div>
+                  <div class="yourday__section-image">
                     <Polaroid
                       img={section.image}
                       imgAlt={section.imageAlt}
@@ -138,27 +138,27 @@ import Swoosh from "components/Swoosh.astro";
     visibility: hidden;
   }
 
-  .section__header {
+  .yourday__section-header {
     display: grid;
     gap: var(--space-3xs);
   }
 
-  .section__time {
+  .yourday__section-time {
     font-size: var(--fs-s);
     text-transform: uppercase;
     color: var(--color-accent);
   }
 
-  .section__title {
+  .yourday__section-title {
     font-size: var(--fs-xl);
     line-height: 1;
   }
 
-  .section__text {
+  .yourday__section-text {
     max-width: 40ch;
   }
 
-  .section__image {
+  .yourday__section-image {
     min-width: 0;
     width: min(100%, 28rem);
     transform: rotate(var(--rotation));
@@ -169,7 +169,7 @@ import Swoosh from "components/Swoosh.astro";
   import { gsap, scoped, ScrollTrigger } from "scripts/gsap";
   import { sections } from "./data";
 
-  const root = document.querySelector("[data-yourday]");
+  const root = document.querySelector('[data-section="yourday"]');
 
   if (root) {
     scoped(() => {
@@ -228,7 +228,7 @@ import Swoosh from "components/Swoosh.astro";
       const setActiveStep = (i: number) => {
         stepperSteps.forEach((step) => {
           step.classList.toggle(
-            "active",
+            "stepper__step--active",
             Number((step as HTMLElement).dataset.stepper) === i,
           );
         });

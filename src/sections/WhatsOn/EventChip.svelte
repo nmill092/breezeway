@@ -15,8 +15,8 @@
 
 <button 
   aria-pressed={isActive}
-  class="events__chip" 
-  class:active={isActive}
+  class="events__chip"
+  class:events__chip--active={isActive}
   onclick={onClick}
   >
   { category }
@@ -33,7 +33,7 @@
   text-wrap: nowrap; 
   transition: background-color .2s ease, color .2s ease, scale .2s cubic-bezier(.99,0,.23,2.04);
 
-  &.active {
+  &.events__chip--active {
     color: var(--color-paper-text);
     background: var(--color-accent);
     scale: .98;

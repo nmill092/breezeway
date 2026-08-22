@@ -25,21 +25,21 @@ const tornTexture = await getImage({
 });
 ---
 
-<section class="story" id="story" data-section-story>
+<section class="story" id="story" data-section="story">
   <div class="torn-edge"></div>
   <div class="container">
-    <div class="story-wrapper">
-     
-        <div class="story-lede">
-          <div class="story-title" data-reveal>
+    <div class="story__wrapper">
+
+        <div class="story__lede">
+          <div class="story__title" data-reveal>
             <h2>
               Our story
-              <div class="swoosh" aria-hidden="true">
+              <div class="story__swoosh" aria-hidden="true">
                 <Swoosh />
               </div>
             </h2>
           </div>
-          <div class="story-copy" data-reveal-group>
+          <div class="story__copy" data-reveal-group>
             <p>
               We built Breezeway in 2022 after the pandemic wiped away some of
               our favorite places to spend time in the city. The spaces where we
@@ -55,7 +55,7 @@ const tornTexture = await getImage({
             </p>
           </div>
         </div>
-         <div class="story-image" data-parallax data-parallax-speed="10" data-reveal>
+         <div class="story__image" data-parallax data-parallax-speed="10" data-reveal>
         <Polaroid
           img={storyImg}
           imgAlt="Three people in a communal lounge area reading, working on a computer, and scrolling on a phone."
@@ -66,16 +66,16 @@ const tornTexture = await getImage({
           tapeRotation="1deg"
         />
         <Image
-          class="flower"
-          src={flowerOverlay} 
+          class="story__flower"
+          src={flowerOverlay}
           width="500"
-          alt="" 
-          aria-hidden="true" 
-          format="avif" /> 
+          alt=""
+          aria-hidden="true"
+          format="avif" />
       </div>
-        <div class="story-pullquote" data-reveal>
+        <div class="story__pullquote" data-reveal>
           <blockquote data-reveal>
-            <div class="line" aria-hidden="true">
+            <div class="story__quote-line" aria-hidden="true">
               <SwooshLine />
             </div>
             <span>No memberships or velvet ropes.</span>
@@ -104,27 +104,20 @@ const tornTexture = await getImage({
     overflow: clip; 
   }
 
-  .story-content {
-    display: flex; 
-    flex-direction: column;
-    gap: var(--space-xl);
-  }
-
-
-  .story-wrapper {
+  .story__wrapper {
     display: flex;
     flex-direction: column;
     gap: var(--space-2xl);
     padding-block-start: var(--space-2xl);
   }
 
-  .story-lede {
+  .story__lede {
     display: flex;
     flex-direction: column;
     gap: var(--space-xl); /* tighter rhythm within title + copy */
   }
 
-  .story-title {
+  .story__title {
     font-size: var(--fs-xl);
 
     h2 {
@@ -132,7 +125,7 @@ const tornTexture = await getImage({
       position: relative;
       display: inline-block;
 
-      .swoosh {
+      .story__swoosh {
         position: absolute;
         width: 70%;
         top: 75%;
@@ -144,7 +137,7 @@ const tornTexture = await getImage({
     }
   }
 
-  .story-copy {
+  .story__copy {
     max-width: 65ch;
     display: flex;
     flex-direction: column;
@@ -152,53 +145,53 @@ const tornTexture = await getImage({
     text-wrap: pretty; 
   }
 
-  .story-pullquote {
+  .story__pullquote {
     blockquote {
       color: var(--color-accent);
       font-family: var(--font-display);
       font-size: var(--fs-xl);
       line-height: 1.2;
       letter-spacing: -0.2;
-      text-align: center; 
+      text-align: center;
       text-wrap: nowrap;
 
       span {
         display: block;
       }
 
-      .line {
+      .story__quote-line {
         width: clamp(13rem, 12cqi, 15rem);
         margin-block-end: var(--space-xs);
-        margin-inline: auto; 
+        margin-inline: auto;
       }
     }
   }
 
-  .story-image {
+  .story__image {
     width: clamp(21rem, 30cqi, 27rem);
     margin: auto;
     transform: rotate(1deg);
-    position: relative; 
-    container-type: inline-size; 
+    position: relative;
+    container-type: inline-size;
 
-    .flower {
-      position: absolute; 
+    .story__flower {
+      position: absolute;
       bottom: -10%;
-      right: -25%;  
-      width: 55cqi; 
-      height: auto; 
+      right: -25%;
+      width: 55cqi;
+      height: auto;
     }
   }
 
   @container (width < 30rem) {
-    .story-pullquote {
+    .story__pullquote {
       margin-inline-start: 0;
       font-size: 1.1rem;
     }
   }
 
   @media (width >= 55rem) {
-    .story-wrapper {
+    .story__wrapper {
       display: grid; 
       grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
       grid-template-areas: 
@@ -208,28 +201,28 @@ const tornTexture = await getImage({
       gap: var(--space-3xl);
     }
 
-    .story-lede {
-      grid-area: lede; 
+    .story__lede {
+      grid-area: lede;
     }
 
-    .story-pullquote {
-      grid-area: pullquote; 
-      
-      blockquote {
-        text-align: left; 
+    .story__pullquote {
+      grid-area: pullquote;
 
-        .line {
+      blockquote {
+        text-align: left;
+
+        .story__quote-line {
           margin-inline: 0;
         }
       }
     }
-    
-    .story-image {
-      grid-area: image; 
+
+    .story__image {
+      grid-area: image;
       transform: rotate(2deg);
     }
 
-    .story-wrapper {
+    .story__wrapper {
       padding-block-start: 0;
     }
   }
@@ -256,7 +249,7 @@ const tornTexture = await getImage({
 import { initParallax } from "scripts/parallax";
 import { initReveal } from "../lib/scripts/reveal";
 
-const root = document.querySelector("[data-section-story]") as HTMLElement; 
+const root = document.querySelector('[data-section="story"]') as HTMLElement;
 
 if (root) {
   initReveal(root);

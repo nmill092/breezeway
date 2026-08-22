@@ -3,29 +3,29 @@ import Swoosh from "components/Swoosh.astro";
 import SwooshLine from "components/SwooshLine.astro";
 ---
 
-<div class="hero-title-stack" data-parallax data-parallax-speed="-30">
-  <h1 data-hero-title class="title">
+<div class="hero-stack" data-parallax data-parallax-speed="-30">
+  <h1 data-hero-title class="hero-stack__title">
     <span>A living room</span>
     <span>for the whole</span>
     <span>neighborhood.</span>
-    <div data-hero-swoosh class="swoosh" aria-hidden="true">
+    <div data-hero-swoosh class="hero-stack__swoosh" aria-hidden="true">
       <Swoosh />
     </div>
   </h1>
-  <div data-hero-eyebrow class="eyebrow">
+  <div data-hero-eyebrow class="hero-stack__eyebrow">
     <span>Your new spot to work, play, relax, or caffeinate –</span>
     <span>all right at home in South Philly.</span>
   </div>
-  <div class="hero-cta">
+  <div class="hero-stack__cta">
     <a data-hero-cta href="#how" class="pill"> How Breezeway Works </a>
-    <div class="hover-line">
+    <div class="hero-stack__hover-line">
       <SwooshLine/>
     </div>
   </div>
 </div>
 
 <style>
-  .hero-title-stack {
+  .hero-stack {
     grid-area: text;
     place-self: center;
     display: flex;
@@ -33,7 +33,7 @@ import SwooshLine from "components/SwooshLine.astro";
     align-items: center;
   }
 
-  .title {
+  .hero-stack__title {
     text-align: center;
     line-height: 0.9;
     font-size: var(--fs-hero);
@@ -45,7 +45,7 @@ import SwooshLine from "components/SwooshLine.astro";
     }
   }
 
-  .eyebrow {
+  .hero-stack__eyebrow {
     text-align: center;
     line-height: 1.12;
     white-space: nowrap;
@@ -57,22 +57,22 @@ import SwooshLine from "components/SwooshLine.astro";
     }
   }
 
-  .hero-cta {
+  .hero-stack__cta {
     margin-block-start: var(--space-l);
-    position: relative; 
+    position: relative;
 
-    .hover-line {
-      position: absolute; 
-      bottom: -50%; 
-      left: 50%; 
+    .hero-stack__hover-line {
+      position: absolute;
+      bottom: -50%;
+      left: 50%;
       transform: translateX(-50%);
       width: 70%;
       color: var(--color-accent);
-      clip-path: inset(0 100% 0 0); 
-      transition: .5s cubic-bezier(1,-0.01,.36,.72) clip-path; 
+      clip-path: inset(0 100% 0 0);
+      transition: .5s cubic-bezier(1,-0.01,.36,.72) clip-path;
     }
 
-    &:has(a:focus-visible, a:hover) .hover-line {
+    &:has(a:focus-visible, a:hover) .hero-stack__hover-line {
      clip-path: inset(0);
     }
 
@@ -84,7 +84,7 @@ import SwooshLine from "components/SwooshLine.astro";
     }
   }
 
-  .swoosh {
+  .hero-stack__swoosh {
     width: 50%;
     margin-inline: auto;
     margin-block-start: var(--space-3xs);
