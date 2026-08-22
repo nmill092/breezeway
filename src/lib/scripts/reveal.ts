@@ -1,9 +1,11 @@
-import { gsap, ScrollTrigger } from "./gsap";
+import { gsap, ScrollTrigger, reduced } from "./gsap";
 
 const DEFAULT_Y = 10; 
 
 export const initReveal = (root: HTMLElement) => { 
 
+  if (reduced()) return; 
+  
   const items = [...root.querySelectorAll('[data-reveal]')]
 
   items.forEach(it => {

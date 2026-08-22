@@ -15,7 +15,7 @@ const navItems: { hash: string, label: string }[] = [
   <div class="container--wide">
     <div class="header__inner">
       <a class="header__brand" href="#main">
-        <Logo />
+        <Logo id="header-logo"/>
       </a>
       <button
         class="header__toggle"
@@ -322,6 +322,8 @@ const navItems: { hash: string, label: string }[] = [
         !navToggle.contains(target)
       ) {
         closeMenu();
+        resetMenu();
+        navToggle.focus()
       }
     };
 

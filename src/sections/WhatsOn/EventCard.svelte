@@ -196,4 +196,20 @@
       aspect-ratio: 3 / 2;
     }
   }
+
+  @media (prefers-reduced-motion: reduce) {
+    .event-card:hover .event-card__image img {
+      scale: initial;
+    }
+
+    .event-card:hover {
+      transform: rotate(var(--rotation));
+      scale: initial;
+    }
+    
+    .event-card,
+    .event-card__image img {
+      transition: none;
+    }
+  }
 </style>

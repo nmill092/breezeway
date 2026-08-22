@@ -51,7 +51,7 @@
     {/each}
   </div>
   </div>
-
+  <p class="sr-only" role="status">Showing {filteredEvents.length} of {events.length} events</p>
   <ul class="events__grid">
     {#each filteredEvents as event (event.id)}
       <li 

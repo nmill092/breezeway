@@ -3,7 +3,6 @@ html {
   color-scheme: light;
   -webkit-text-size-adjust: 100%;
   scroll-padding-top: calc(var(--header-h) + var(--nav-gap)); 
-  scroll-behavior: smooth; 
 }
 
 body {
@@ -15,4 +14,15 @@ body {
 :where(h1, h2, h3, h4, h5) {
   font-family: var(--font-display);
   color: var(--color-ink);
+}
+
+:focus-visible { 
+  outline: 2px solid var(--color-accent); 
+  outline-offset: 3px 
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth; 
+  }
 }
